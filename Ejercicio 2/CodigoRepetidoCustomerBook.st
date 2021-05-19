@@ -21,10 +21,10 @@ TestCase subclass: #CustomerBookTest
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
-!CustomerBookTest methodsFor: 'tests' stamp: 'AGG 5/18/2021 15:07:42'!
+!CustomerBookTest methodsFor: 'tests' stamp: 'SRM 5/18/2021 21:55:54'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
-	| customerBook action|
+	| customerBook action |
 	
 	customerBook := CustomerBook new.
 	
@@ -159,24 +159,6 @@ forceToFail: actionsToFail withError: typeOfError andDo: actionsToDoWhenItFails
 		self fail]
 		on: typeOfError
 		do: actionsToDoWhenItFails.! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'CustomerBookTest class' category: 'CodigoRepetido-Ejercicio'!
-CustomerBookTest class
-	instanceVariableNames: ''!
-
-!CustomerBookTest class methodsFor: 'as yet unclassified' stamp: 'AGG 5/16/2021 10:05:48'!
-medirTiempoAlAccionar: bloque
-	|millisecondsBeforeRunning millisecondsAfterRunning |
-	millisecondsBeforeRunning := (self)tiempoEnMilisegundos.
-	bloque.
-	millisecondsAfterRunning := (self)tiempoEnMilisegundos.
-	^(millisecondsAfterRunning - millisecondsBeforeRunning).! !
-
-!CustomerBookTest class methodsFor: 'as yet unclassified' stamp: 'AGG 5/16/2021 09:59:48'!
-tiempoEnMilisegundos
-	^(Time millisecondClockValue * millisecond).! !
 
 
 !classDefinition: #CustomerBook category: 'CodigoRepetido-Ejercicio'!
