@@ -266,7 +266,7 @@ test42SignIsCorrectlyAssignedToFractionWithNegativeDivisor
 	self assert: oneHalf negated equals: (one / negativeTwo)! !
 
 
-!NumeroTest methodsFor: 'setup' stamp: 'SRM 5/28/2021 08:45:34'!
+!NumeroTest methodsFor: 'setup' stamp: 'NR 9/23/2018 23:46:28'!
 setUp
 
 	zero := Entero with: 0.
@@ -314,10 +314,11 @@ Object subclass: #Numero
 
 	self subclassResponsibility ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:37:13'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 15:37:52'!
 negated
 	
-	^self * (Entero with: -1)! !
+	^self * (Entero with: -1)
+	"Deberíamos cambiarlo supongo"! !
 
 
 !Numero methodsFor: 'testing' stamp: 'NR 9/23/2018 23:36:49'!
@@ -346,16 +347,6 @@ beAddedToFraccion: aFraccionAugend
 
 	self subclassResponsibility.! !
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 19:01:07'!
-beDividedToEntero: anEnteroDividend
-
-	self subclassResponsibility.! !
-
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 19:01:22'!
-beDividedToFraccion: aFraccionDividend
-
-	self subclassResponsibility.! !
-
 !Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 18:14:59'!
 beMultipliedToEntero: anEnteroMultiplicand
 
@@ -376,10 +367,21 @@ beSubstractedFromFraccion: aFraccionMinuend
 
 	self subclassResponsibility.! !
 
-!Numero methodsFor: 'private' stamp: 'HernanWilkinson 5/7/2016 22:48'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/30/2021 18:46:29'!
+divideAFraccion: aFraccionDividend
+
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'private' stamp: 'SRM 5/30/2021 18:35:07'!
+divideAnEntero: anEnteroDividend
+
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'private' stamp: 'SRM 5/30/2021 15:39:10'!
 invalidNumberType
 
-	self error: self class invalidNumberTypeErrorDescription! !
+	self error: self class invalidNumberTypeErrorDescription
+	"Deberíamos eliminarlo supongo, no se usa en ningún lado"! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -392,10 +394,11 @@ canNotDivideByZeroErrorDescription
 
 	^'No se puede Dividir por Cero'! !
 
-!Numero class methodsFor: 'error descriptions' stamp: 'SRM 5/28/2021 08:49:03'!
+!Numero class methodsFor: 'error descriptions' stamp: 'SRM 5/30/2021 15:39:56'!
 invalidNumberTypeErrorDescription
 	
-	^ 'Tipo de Número Inválido'! !
+	^ 'Tipo de Número Inválido'
+	"Deberíamos eliminarlo, sólo se envía en el mensaje que no se usa nunca"! !
 
 
 !classDefinition: #Entero category: 'PolimorfismosNumeros'!
@@ -405,42 +408,34 @@ Numero subclass: #Entero
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 18:41:07'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 16:55:15'!
 * aMultiplier 
 	
-	^ aMultiplier beMultipliedToEntero: self. 
+	^aMultiplier beMultipliedToEntero: self. 
 	! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 18:34:13'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 16:55:19'!
 + anAdder 
 	
-	^ anAdder beAddedToEntero: self.
+	^anAdder beAddedToEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 18:47:56'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 16:55:26'!
 - aSubtrahend 
 	
-	^ aSubtrahend beSubstractedFromEntero: self.
+	^aSubtrahend beSubstractedFromEntero: self.
 	! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 19:00:12'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 18:35:07'!
 / aDivisor 
 	
-	^ aDivisor beDividedToEntero: self.
+	^aDivisor divideAnEntero: self.
 	! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 08:51:26'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 20:08:24'!
 fibonacci
 
-	| one two |
-	
-	one := Entero with: 1.
-	two := Entero with: 2.
-	
-	self isNegative ifTrue: [self error: Entero negativeFibonacciErrorDescription ].	
-	(self isZero or: [self isOne]) ifTrue: [^one].
-	
-	^ (self - one) fibonacci + (self - two) fibonacci
+	self subclassResponsibility.
 		! !
 
 
@@ -455,8 +450,8 @@ hash
 	^value hash! !
 
 
-!Entero methodsFor: 'initialization' stamp: 'HernanWilkinson 5/7/2016 20:09'!
-initalizeWith: aValue 
+!Entero methodsFor: 'initialization' stamp: 'SRM 5/30/2021 18:07:06'!
+initializeWith: aValue 
 	
 	value := aValue! !
 
@@ -506,16 +501,6 @@ beAddedToFraccion: aFraccionAugend
 
 	^(aFraccionAugend numerator + (aFraccionAugend denominator * self)) / aFraccionAugend denominator.! !
 
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:45:39'!
-beDividedToEntero: anEnteroDividend
-
-	^Fraccion with: anEnteroDividend over: self.! !
-
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 19:02:48'!
-beDividedToFraccion: aFraccionDividend
-
-	^ aFraccionDividend numerator / ( aFraccionDividend denominator * self).! !
-
 !Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:11:13'!
 beMultipliedToEntero: anEnteroMultiplicand
 
@@ -536,6 +521,16 @@ beSubstractedFromFraccion: aFraccionMinuend
 
 	^(aFraccionMinuend numerator - (aFraccionMinuend denominator * self)) / aFraccionMinuend denominator.! !
 
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:46:29'!
+divideAFraccion: aFraccionDividend
+
+	^aFraccionDividend numerator / ( aFraccionDividend denominator * self).! !
+
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:35:07'!
+divideAnEntero: aDividend
+
+	self subclassResponsibility.! !
+
 !Entero methodsFor: 'arithmetic operations - private' stamp: 'HernanWilkinson 5/7/2016 21:00'!
 greatestCommonDivisorWith: anEntero 
 	
@@ -552,13 +547,133 @@ negativeFibonacciErrorDescription
 	
 	^ 'Fibonacci no está definido aquí para Enteros Negativos'! !
 
-!Entero class methodsFor: 'instance creation' stamp: 'SRM 5/28/2021 17:07:44'!
+!Entero class methodsFor: 'instance creation' stamp: 'SRM 5/30/2021 19:17:24'!
 with: aValue 
 	
 	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
 	aValue isInteger ifFalse: [  self error: 'aValue debe ser anInteger' ].
 	
-	^self new initalizeWith: aValue.! !
+	aValue < 0 ifTrue: [^Negativo new initializeWith: aValue].
+	
+	aValue = 0 ifTrue: [^Cero new initializeWith: 0].
+	
+	aValue = 1 ifTrue: [^Uno new initializeWith: 1].
+	
+	aValue > 1 ifTrue: [^MayorAUno new initializeWith: aValue].! !
+
+
+!classDefinition: #Cero category: 'PolimorfismosNumeros'!
+Entero subclass: #Cero
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'PolimorfismosNumeros'!
+
+!Cero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 18:35:07'!
+divideAnEntero: anEnteroDividend
+
+	Fraccion error: Fraccion canNotDivideByZeroErrorDescription.! !
+
+!Cero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:03:50'!
+fibonacci
+
+	^Entero with: 1.
+
+	! !
+
+
+!classDefinition: #DistintoDeCero category: 'PolimorfismosNumeros'!
+Entero subclass: #DistintoDeCero
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'PolimorfismosNumeros'!
+
+!DistintoDeCero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:44:48'!
+divideACoprimeEntero: anEnteroDividend
+
+	^Fraccion new initializeWith: anEnteroDividend over: self.! !
+
+!DistintoDeCero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 19:08:11'!
+divideAnEntero: anEnteroDividend
+
+	| denominator greatestCommonDivisor numerator |
+	greatestCommonDivisor := anEnteroDividend greatestCommonDivisorWith: self. 
+	numerator := anEnteroDividend // greatestCommonDivisor.
+	denominator := self // greatestCommonDivisor.
+	
+	^denominator divideACoprimeEntero: numerator.! !
+
+!DistintoDeCero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:01:34'!
+fibonacci
+
+	self subclassResponsibility.! !
+
+
+!classDefinition: #Negativo category: 'PolimorfismosNumeros'!
+DistintoDeCero subclass: #Negativo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'PolimorfismosNumeros'!
+
+!Negativo methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 18:35:07'!
+divideAnEntero: anEnteroDividend
+
+	^anEnteroDividend negated / self negated.! !
+
+!Negativo methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 19:59:20'!
+fibonacci
+
+	self error: Entero negativeFibonacciErrorDescription.! !
+
+
+!classDefinition: #Positivo category: 'PolimorfismosNumeros'!
+DistintoDeCero subclass: #Positivo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'PolimorfismosNumeros'!
+
+!Positivo methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:01:55'!
+fibonacci
+
+	self subclassResponsibility.! !
+
+
+!classDefinition: #MayorAUno category: 'PolimorfismosNumeros'!
+Positivo subclass: #MayorAUno
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'PolimorfismosNumeros'!
+
+!MayorAUno methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:07:39'!
+fibonacci
+
+	| one two |
+	one := Entero with: 1.
+	two := Entero with: 2.
+	
+	^(self - one) fibonacci + (self - two) fibonacci.! !
+
+
+!classDefinition: #Uno category: 'PolimorfismosNumeros'!
+Positivo subclass: #Uno
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'PolimorfismosNumeros'!
+
+!Uno methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 19:04:41'!
+divideACoprimeEntero: anEnteroDividend
+
+	^anEnteroDividend! !
+
+!Uno methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:05:41'!
+fibonacci
+
+	^Entero with: 1.! !
 
 
 !classDefinition: #Fraccion category: 'PolimorfismosNumeros'!
@@ -568,10 +683,10 @@ Numero subclass: #Fraccion
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 18:22:00'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 17:06:47'!
 * aMultiplier 
 	
-	^ aMultiplier beMultipliedToFraccion: self.
+	^aMultiplier beMultipliedToFraccion: self.
 	! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 17:28:03'!
@@ -585,10 +700,10 @@ Numero subclass: #Fraccion
 	^aSubtrahend beSubstractedFromFraccion: self.
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 19:04:36'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 18:46:29'!
 / aDivisor 
 	
-	^aDivisor beDividedToFraccion: self. ! !
+	^aDivisor divideAFraccion: self. ! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
@@ -663,16 +778,6 @@ beAddedToFraccion: aFraccionAugend
 	newDenominator := denominator * aFraccionAugend denominator. 
 	^newNumerator / newDenominator.! !
 
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:58:50'!
-beDividedToEntero: anEnteroDividend
-
-	^ anEnteroDividend * denominator / numerator.! !
-
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 19:03:45'!
-beDividedToFraccion: aFraccionDividend
-
-	^(aFraccionDividend numerator * denominator) / (aFraccionDividend denominator * numerator).! !
-
 !Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:21:28'!
 beMultipliedToEntero: anEnteroMultiplicand
 
@@ -696,27 +801,12 @@ beSubstractedFromFraccion: aFraccionMinuend
 	newDenominator := denominator * aFraccionMinuend denominator.	
 	^newNumerator / newDenominator.! !
 
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:46:29'!
+divideAFraccion: aFraccionDividend
 
-!classDefinition: 'Fraccion class' category: 'PolimorfismosNumeros'!
-Fraccion class
-	instanceVariableNames: ''!
+	^(aFraccionDividend numerator * denominator) / (aFraccionDividend denominator * numerator).! !
 
-!Fraccion class methodsFor: 'intance creation' stamp: 'SRM 5/28/2021 17:07:57'!
-with: aDividend over: aDivisor
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:35:07'!
+divideAnEntero: anEnteroDividend
 
-	| greatestCommonDivisor numerator denominator |
-	
-	aDivisor isZero ifTrue: [ self error: self canNotDivideByZeroErrorDescription ].
-	aDividend isZero ifTrue: [ ^aDividend ].
-	
-	aDivisor isNegative ifTrue:[ ^aDividend negated / aDivisor negated].
-	
-	greatestCommonDivisor := aDividend greatestCommonDivisorWith: aDivisor. 
-	numerator := aDividend // greatestCommonDivisor.
-	denominator := aDivisor // greatestCommonDivisor.
-	
-	denominator isOne ifTrue: [ ^numerator ].
-
-	^self new initializeWith: numerator over: denominator.
-	! !
+	^ anEnteroDividend * denominator / numerator.! !
