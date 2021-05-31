@@ -304,21 +304,20 @@ Object subclass: #Numero
 
 	self subclassResponsibility ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 17:42:37'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:27:49'!
 - aSubtrahend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
 !Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:49'!
 / aDivisor
 
 	self subclassResponsibility ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 15:37:52'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 16:38:43'!
 negated
 	
-	^self * (Entero with: -1)
-	"Deberíamos cambiarlo supongo"! !
+	^self * (Entero with: -1)! !
 
 
 !Numero methodsFor: 'testing' stamp: 'NR 9/23/2018 23:36:49'!
@@ -337,51 +336,50 @@ isZero
 	self subclassResponsibility ! !
 
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 10:52:50'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:12'!
 beAddedToEntero: anEnteroAugend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 14:34:44'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:16'!
 beAddedToFraccion: aFraccionAugend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 18:14:59'!
-beMultipliedToEntero: anEnteroMultiplicand
-
-	self subclassResponsibility.! !
-
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 18:15:20'!
-beMultipliedToFraccion: aFraccionMultiplicand
-
-	self subclassResponsibility.! !
-
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 18:47:56'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:19'!
 beSubstractedFromEntero: anEnteroMinuend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/28/2021 18:48:17'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:23'!
 beSubstractedFromFraccion: aFraccionMinuend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/30/2021 18:46:29'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:27'!
 divideAFraccion: aFraccionDividend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/30/2021 18:35:07'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:31'!
 divideAnEntero: anEnteroDividend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
-!Numero methodsFor: 'private' stamp: 'SRM 5/30/2021 15:39:10'!
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:38'!
 invalidNumberType
 
-	self error: self class invalidNumberTypeErrorDescription
-	"Deberíamos eliminarlo supongo, no se usa en ningún lado"! !
+	self error: self class invalidNumberTypeErrorDescription! !
+
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:43'!
+multiplyAFraccion: aFraccionMultiplicand
+
+	self subclassResponsibility! !
+
+!Numero methodsFor: 'private' stamp: 'SRM 5/31/2021 14:29:46'!
+multiplyAnEntero: anEnteroMultiplicand
+
+	self subclassResponsibility! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -394,11 +392,10 @@ canNotDivideByZeroErrorDescription
 
 	^'No se puede Dividir por Cero'! !
 
-!Numero class methodsFor: 'error descriptions' stamp: 'SRM 5/30/2021 15:39:56'!
+!Numero class methodsFor: 'error descriptions' stamp: 'SRM 5/31/2021 14:30:02'!
 invalidNumberTypeErrorDescription
 	
-	^ 'Tipo de Número Inválido'
-	"Deberíamos eliminarlo, sólo se envía en el mensaje que no se usa nunca"! !
+	^'Tipo de Número Inválido'! !
 
 
 !classDefinition: #Entero category: 'PolimorfismosNumeros'!
@@ -408,10 +405,10 @@ Numero subclass: #Entero
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 16:55:15'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:21:46'!
 * aMultiplier 
 	
-	^aMultiplier beMultipliedToEntero: self. 
+	^aMultiplier multiplyAnEntero: self. 
 	! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 16:55:19'!
@@ -420,10 +417,10 @@ Numero subclass: #Entero
 	^anAdder beAddedToEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 16:55:26'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 16:23:08'!
 - aSubtrahend 
 	
-	^aSubtrahend beSubstractedFromEntero: self.
+	^aSubtrahend negated beAddedToEntero: self
 	! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 18:35:07'!
@@ -431,6 +428,11 @@ Numero subclass: #Entero
 	
 	^aDivisor divideAnEntero: self.
 	! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 21:55'!
+// aDivisor 
+	
+	^self class with: value // aDivisor integerValue! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 20:08:24'!
 fibonacci
@@ -486,55 +488,50 @@ isZero
 	^value = 0.! !
 
 
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'HernanWilkinson 5/7/2016 21:55'!
-// aDivisor 
-	
-	^self class with: value // aDivisor integerValue! !
-
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 16:36:49'!
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:38:14'!
 beAddedToEntero: anEnteroAugend
 
-	^self class with: (anEnteroAugend integerValue + self integerValue).! !
+	^self class with: (anEnteroAugend integerValue + self integerValue)! !
 
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 16:53:57'!
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 16:37:02'!
 beAddedToFraccion: aFraccionAugend
 
-	^(aFraccionAugend numerator + (aFraccionAugend denominator * self)) / aFraccionAugend denominator.! !
+	^self + aFraccionAugend
+	"lo enviamos al revés aprovechando la conmutatividad de la suma, para no repetir código"! !
 
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:11:13'!
-beMultipliedToEntero: anEnteroMultiplicand
-
-	^self class with: anEnteroMultiplicand integerValue * value.! !
-
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:12:36'!
-beMultipliedToFraccion: aFraccionMultiplicand
-
-	^(aFraccionMultiplicand numerator * self) / aFraccionMultiplicand denominator.! !
-
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:47:56'!
-beSubstractedFromEntero: anEnteroMinuend
-
-	^ self class with: (anEnteroMinuend integerValue - self integerValue).! !
-
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:48:17'!
-beSubstractedFromFraccion: aFraccionMinuend
-
-	^(aFraccionMinuend numerator - (aFraccionMinuend denominator * self)) / aFraccionMinuend denominator.! !
-
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:46:29'!
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 16:50:00'!
 divideAFraccion: aFraccionDividend
 
-	^aFraccionDividend numerator / ( aFraccionDividend denominator * self).! !
+	^aFraccionDividend beDividedByAnEntero: self
+	"invertimos el orden para evitar romper encapsulamiento"! !
 
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:35:07'!
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:37:46'!
 divideAnEntero: aDividend
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
 
 !Entero methodsFor: 'arithmetic operations - private' stamp: 'HernanWilkinson 5/7/2016 21:00'!
 greatestCommonDivisorWith: anEntero 
 	
 	^self class with: (value gcd: anEntero integerValue)! !
+
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 16:36:34'!
+multiplyAFraccion: aFraccionMultiplicand
+
+	^self * aFraccionMultiplicand
+	"lo enviamos al revés aprovechando la conmutatividad de la multiplicación, para no repetir código"! !
+
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:37:16'!
+multiplyAnEntero: anEnteroMultiplicand
+
+	^self class with: anEnteroMultiplicand integerValue * value! !
+
+
+!Entero methodsFor: 'validation - private' stamp: 'SRM 5/31/2021 16:17:11'!
+checkThatIsAValidDenominator! !
+
+!Entero methodsFor: 'validation - private' stamp: 'SRM 5/31/2021 16:16:10'!
+checkThatIsAValidNumerator! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -542,24 +539,24 @@ greatestCommonDivisorWith: anEntero
 Entero class
 	instanceVariableNames: ''!
 
-!Entero class methodsFor: 'instance creation' stamp: 'SRM 5/28/2021 08:51:37'!
-negativeFibonacciErrorDescription
-	
-	^ 'Fibonacci no está definido aquí para Enteros Negativos'! !
-
-!Entero class methodsFor: 'instance creation' stamp: 'SRM 5/30/2021 19:17:24'!
+!Entero class methodsFor: 'instance creation' stamp: 'SRM 5/31/2021 17:06:26'!
 with: aValue 
 	
-	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
+	| class |
 	aValue isInteger ifFalse: [  self error: 'aValue debe ser anInteger' ].
 	
-	aValue < 0 ifTrue: [^Negativo new initializeWith: aValue].
+	class := Entero allSubclasses detect: [:currentClass | currentClass includesValue: aValue] ifNone: [self error: 'el valor no es válido'].
+	^class new initializeWith: aValue
 	
-	aValue = 0 ifTrue: [^Cero new initializeWith: 0].
 	
-	aValue = 1 ifTrue: [^Uno new initializeWith: 1].
 	
-	aValue > 1 ifTrue: [^MayorAUno new initializeWith: aValue].! !
+	! !
+
+
+!Entero class methodsFor: 'error descriptions' stamp: 'SRM 5/31/2021 14:30:10'!
+negativeFibonacciErrorDescription
+	
+	^'Fibonacci no está definido aquí para Enteros Negativos'! !
 
 
 !classDefinition: #Cero category: 'PolimorfismosNumeros'!
@@ -569,17 +566,35 @@ Entero subclass: #Cero
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Cero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 18:35:07'!
+!Cero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:35:07'!
 divideAnEntero: anEnteroDividend
 
 	Fraccion error: Fraccion canNotDivideByZeroErrorDescription.! !
 
-!Cero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:03:50'!
+
+!Cero methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 20:03:50'!
 fibonacci
 
 	^Entero with: 1.
 
 	! !
+
+
+!Cero methodsFor: 'validation - private' stamp: 'SRM 5/31/2021 16:16:42'!
+checkThatIsAValidNumerator
+
+	self error: 'una fraccion no puede ser cero'! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Cero class' category: 'PolimorfismosNumeros'!
+Cero class
+	instanceVariableNames: ''!
+
+!Cero class methodsFor: 'private' stamp: 'SRM 5/31/2021 17:06:26'!
+includesValue: aValue
+
+	^(aValue = 0)! !
 
 
 !classDefinition: #DistintoDeCero category: 'PolimorfismosNumeros'!
@@ -589,12 +604,18 @@ Entero subclass: #DistintoDeCero
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!DistintoDeCero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:44:48'!
+!DistintoDeCero methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:31:15'!
+fibonacci
+
+	self subclassResponsibility! !
+
+
+!DistintoDeCero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:31:29'!
 divideACoprimeEntero: anEnteroDividend
 
-	^Fraccion new initializeWith: anEnteroDividend over: self.! !
+	^Fraccion new initializeWith: anEnteroDividend over: self! !
 
-!DistintoDeCero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 19:08:11'!
+!DistintoDeCero methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:31:23'!
 divideAnEntero: anEnteroDividend
 
 	| denominator greatestCommonDivisor numerator |
@@ -602,12 +623,18 @@ divideAnEntero: anEnteroDividend
 	numerator := anEnteroDividend // greatestCommonDivisor.
 	denominator := self // greatestCommonDivisor.
 	
-	^denominator divideACoprimeEntero: numerator.! !
+	^denominator divideACoprimeEntero: numerator! !
 
-!DistintoDeCero methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:01:34'!
-fibonacci
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-	self subclassResponsibility.! !
+!classDefinition: 'DistintoDeCero class' category: 'PolimorfismosNumeros'!
+DistintoDeCero class
+	instanceVariableNames: ''!
+
+!DistintoDeCero class methodsFor: 'private' stamp: 'SRM 5/31/2021 17:06:26'!
+includesValue: aValue
+
+	^false! !
 
 
 !classDefinition: #Negativo category: 'PolimorfismosNumeros'!
@@ -617,15 +644,27 @@ DistintoDeCero subclass: #Negativo
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Negativo methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 18:35:07'!
-divideAnEntero: anEnteroDividend
-
-	^anEnteroDividend negated / self negated.! !
-
-!Negativo methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 19:59:20'!
+!Negativo methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:31:40'!
 fibonacci
 
-	self error: Entero negativeFibonacciErrorDescription.! !
+	self error: Entero negativeFibonacciErrorDescription! !
+
+
+!Negativo methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:31:36'!
+divideAnEntero: anEnteroDividend
+
+	^anEnteroDividend negated / self negated! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Negativo class' category: 'PolimorfismosNumeros'!
+Negativo class
+	instanceVariableNames: ''!
+
+!Negativo class methodsFor: 'private' stamp: 'SRM 5/31/2021 17:06:26'!
+includesValue: aValue
+
+	^(aValue < 0)! !
 
 
 !classDefinition: #Positivo category: 'PolimorfismosNumeros'!
@@ -635,10 +674,21 @@ DistintoDeCero subclass: #Positivo
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Positivo methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:01:55'!
+!Positivo methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:31:50'!
 fibonacci
 
-	self subclassResponsibility.! !
+	self subclassResponsibility! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Positivo class' category: 'PolimorfismosNumeros'!
+Positivo class
+	instanceVariableNames: ''!
+
+!Positivo class methodsFor: 'private' stamp: 'SRM 5/31/2021 17:06:25'!
+includesValue: aValue
+
+	^false! !
 
 
 !classDefinition: #MayorAUno category: 'PolimorfismosNumeros'!
@@ -648,14 +698,25 @@ Positivo subclass: #MayorAUno
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!MayorAUno methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:07:39'!
+!MayorAUno methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:31:56'!
 fibonacci
 
 	| one two |
 	one := Entero with: 1.
 	two := Entero with: 2.
 	
-	^(self - one) fibonacci + (self - two) fibonacci.! !
+	^(self - one) fibonacci + (self - two) fibonacci! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MayorAUno class' category: 'PolimorfismosNumeros'!
+MayorAUno class
+	instanceVariableNames: ''!
+
+!MayorAUno class methodsFor: 'private' stamp: 'SRM 5/31/2021 17:06:26'!
+includesValue: aValue
+
+	^(aValue > 1)! !
 
 
 !classDefinition: #Uno category: 'PolimorfismosNumeros'!
@@ -665,15 +726,34 @@ Positivo subclass: #Uno
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 19:04:41'!
+!Uno methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:32:08'!
+fibonacci
+
+	^Entero with: 1! !
+
+
+!Uno methodsFor: 'validation - private' stamp: 'SRM 5/31/2021 16:17:45'!
+checkThatIsAValidDenominator
+	
+	self error: 'una fraccion no puede tener denominador 1 porque sino es un entero'
+	! !
+
+
+!Uno methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 19:04:41'!
 divideACoprimeEntero: anEnteroDividend
 
 	^anEnteroDividend! !
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'SRM 5/30/2021 20:05:41'!
-fibonacci
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-	^Entero with: 1.! !
+!classDefinition: 'Uno class' category: 'PolimorfismosNumeros'!
+Uno class
+	instanceVariableNames: ''!
+
+!Uno class methodsFor: 'private' stamp: 'SRM 5/31/2021 17:06:26'!
+includesValue: aValue
+
+	^(aValue = 1)! !
 
 
 !classDefinition: #Fraccion category: 'PolimorfismosNumeros'!
@@ -683,27 +763,27 @@ Numero subclass: #Fraccion
 	poolDictionaries: ''
 	category: 'PolimorfismosNumeros'!
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 17:06:47'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:32:15'!
 * aMultiplier 
 	
-	^aMultiplier beMultipliedToFraccion: self.
+	^aMultiplier multiplyAFraccion: self
 	! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 17:28:03'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:32:19'!
 + anAdder 
 		
-	^anAdder beAddedToFraccion: self.! !
+	^anAdder beAddedToFraccion: self! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/28/2021 18:48:17'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 16:23:43'!
 - aSubtrahend 
 	
-	^aSubtrahend beSubstractedFromFraccion: self.
+	^aSubtrahend negated beAddedToFraccion: self
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/30/2021 18:46:29'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'SRM 5/31/2021 14:32:27'!
 / aDivisor 
 	
-	^aDivisor divideAFraccion: self. ! !
+	^aDivisor divideAFraccion: self! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
@@ -717,26 +797,28 @@ hash
 	^(numerator hash / denominator hash) hash! !
 
 
-!Fraccion methodsFor: 'accessing' stamp: 'HernanWilkinson 5/7/2016 21:56'!
+!Fraccion methodsFor: 'accessing' stamp: 'SRM 5/31/2021 14:27:12'!
 denominator
 
-	^ denominator! !
+	^denominator! !
 
-!Fraccion methodsFor: 'accessing' stamp: 'HernanWilkinson 5/7/2016 21:56'!
+!Fraccion methodsFor: 'accessing' stamp: 'SRM 5/31/2021 14:27:17'!
 numerator
 
-	^ numerator! !
+	^numerator! !
 
 
-!Fraccion methodsFor: 'initialization' stamp: 'HernanWilkinson 5/7/2016 22:54'!
+!Fraccion methodsFor: 'initialization' stamp: 'SRM 5/31/2021 16:18:10'!
 initializeWith: aNumerator over: aDenominator
 
-	"Estas precondiciones estan por si se comenten errores en la implementacion - Hernan"
-	aNumerator isZero ifTrue: [ self error: 'una fraccion no puede ser cero' ].
-	aDenominator isOne ifTrue: [ self error: 'una fraccion no puede tener denominador 1 porque sino es un entero' ].
+	"Estas precondiciones estan por si se comenten errores en la implementacion - Hernan"	
+	aNumerator checkThatIsAValidNumerator.
+	aDenominator checkThatIsAValidDenominator.
 	
 	numerator := aNumerator.
-	denominator := aDenominator ! !
+	denominator := aDenominator
+	
+	! !
 
 
 !Fraccion methodsFor: 'testing' stamp: 'NR 9/23/2018 23:41:38'!
@@ -764,49 +846,50 @@ printOn: aStream
 		print: denominator ! !
 
 
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 17:12:56'!
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:32:54'!
 beAddedToEntero: anEnteroAugend
 
-	^(self numerator + (self denominator * anEnteroAugend)) / self denominator.! !
+	^numerator + (denominator * anEnteroAugend) / denominator! !
 
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 10:45:29'!
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:33:00'!
 beAddedToFraccion: aFraccionAugend
 
 	| newNumerator newDenominator | 
 	
 	newNumerator := (numerator * aFraccionAugend denominator) + (denominator * aFraccionAugend numerator).
 	newDenominator := denominator * aFraccionAugend denominator. 
-	^newNumerator / newDenominator.! !
+	^newNumerator / newDenominator! !
 
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:21:28'!
-beMultipliedToEntero: anEnteroMultiplicand
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 16:48:29'!
+beDividedByAnEntero: anEnteroDivisor
 
-	^anEnteroMultiplicand * numerator / denominator.! !
+	^numerator / ( denominator * anEnteroDivisor )! !
 
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:20:40'!
-beMultipliedToFraccion: aFraccionMultiplicand
-
-	^(aFraccionMultiplicand numerator * numerator) / (aFraccionMultiplicand denominator * denominator).! !
-
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:47:56'!
-beSubstractedFromEntero: anEnteroMinuend
-
-	^(anEnteroMinuend * self denominator - self numerator) / self denominator.! !
-
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/28/2021 18:48:17'!
-beSubstractedFromFraccion: aFraccionMinuend
-
-	| newNumerator newDenominator |
-	newNumerator := (denominator * aFraccionMinuend numerator) - (numerator * aFraccionMinuend denominator).
-	newDenominator := denominator * aFraccionMinuend denominator.	
-	^newNumerator / newDenominator.! !
-
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:46:29'!
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:33:15'!
 divideAFraccion: aFraccionDividend
 
-	^(aFraccionDividend numerator * denominator) / (aFraccionDividend denominator * numerator).! !
+	^(aFraccionDividend numerator * denominator) / (aFraccionDividend denominator * numerator)! !
 
-!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/30/2021 18:35:07'!
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:33:19'!
 divideAnEntero: anEnteroDividend
 
-	^ anEnteroDividend * denominator / numerator.! !
+	^ anEnteroDividend * denominator / numerator! !
+
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:33:23'!
+multiplyAFraccion: aFraccionMultiplicand
+
+	^(aFraccionMultiplicand numerator * numerator) / (aFraccionMultiplicand denominator * denominator)! !
+
+!Fraccion methodsFor: 'arithmetic operations - private' stamp: 'SRM 5/31/2021 14:33:29'!
+multiplyAnEntero: anEnteroMultiplicand
+
+	^anEnteroMultiplicand * numerator / denominator! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Fraccion class' category: 'PolimorfismosNumeros'!
+Fraccion class
+	instanceVariableNames: ''!
+
+!Fraccion class methodsFor: 'private' stamp: 'SRM 5/31/2021 17:06:26'!
+includesValue: aValue! !
