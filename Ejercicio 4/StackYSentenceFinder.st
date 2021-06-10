@@ -91,7 +91,7 @@ test07TopDoesNotRemoveObjectFromStack
 	self assert: stack size = 1.
 	! !
 
-!OOStackTest methodsFor: 'test' stamp: 'HAW 4/14/2017 22:48:26'!
+!OOStackTest methodsFor: 'test' stamp: 'SRM 6/10/2021 16:08:50'!
 test08CanNotPopWhenThereAreNoObjectsInTheStack
 
 	| stack  |
@@ -99,7 +99,7 @@ test08CanNotPopWhenThereAreNoObjectsInTheStack
 	stack := OOStack new.
 	self
 		should: [ stack pop ]
-		raise: Error - MessageNotUnderstood 
+		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = OOStack stackEmptyErrorDescription ]
 		
@@ -139,10 +139,136 @@ test10CanNotTopWhenThereAreNoObjectsInTheStack
 
 !classDefinition: #SentenceFinderByPrefixTest category: 'Stack-Exercise'!
 TestCase subclass: #SentenceFinderByPrefixTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'stack sentenceFinder collection'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
+
+!SentenceFinderByPrefixTest methodsFor: 'private' stamp: 'SRM 6/10/2021 17:21:04'!
+invalidPrefixErrorShouldBeRaisedWhenExecuted: aBlockThatShouldRaiseAnError
+
+	self should: aBlockThatShouldRaiseAnError
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix invalidPrefixDescription ]! !
+
+!SentenceFinderByPrefixTest methodsFor: 'private' stamp: 'SRM 6/10/2021 17:27:47'!
+pushSentencesToStack: aStack
+
+	aStack push: 'Santiago Ruiz'.
+	aStack push: 'Micaela pandolfo'.
+	aStack push: 'manu mendez'.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'private' stamp: 'SRM 6/10/2021 16:50:49'!
+setUp
+
+	stack := OOStack new.
+	sentenceFinder := SentenceFinderByPrefix new.
+	! !
+
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:26'!
+test01EmptyPrefixShouldRaiseAnError
+
+	self pushSentencesToStack: stack.
+	
+	self invalidPrefixErrorShouldBeRaisedWhenExecuted: [sentenceFinder findAndCollectAllSentencesWithThePrefix: '' on: stack].! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:25'!
+test02PrefixWithWhiteSpaceShouldRaiseAnError
+
+	self pushSentencesToStack: stack.
+	
+	self invalidPrefixErrorShouldBeRaisedWhenExecuted: [sentenceFinder findAndCollectAllSentencesWithThePrefix: 'ho la' on: stack]! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:26'!
+test03PrefixIsNotAStringShouldRaiseAnError
+
+	self pushSentencesToStack: stack.
+	
+	self invalidPrefixErrorShouldBeRaisedWhenExecuted: [sentenceFinder findAndCollectAllSentencesWithThePrefix: 1 on: stack]! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:26'!
+test04EmptyStackShouldReturnAnEmptyCollection
+
+	collection := sentenceFinder findAndCollectAllSentencesWithThePrefix: 'aaa' on: stack.
+	self assert: collection isEmpty.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:26'!
+test05StackIsNotAnOOStackShouldRaiseAnError
+
+	self should: [sentenceFinder findAndCollectAllSentencesWithThePrefix: 'hola' on: 'IAmNotAStack']
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix invalidStackDescription ]! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:25'!
+test06SentenceFinderFindsAtLeastOneSentence
+
+	self pushSentencesToStack: stack.
+	stack push: 'Gabriela Martinez'.
+	
+       collection := 	sentenceFinder findAndCollectAllSentencesWithThePrefix: 'Gabri' on: stack.
+	self assert: ((collection size = 1) and: (collection includes: 'Gabriela Martinez'))
+	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:25'!
+test07SentenceFinderFindsNoSentence
+
+	self pushSentencesToStack: stack.
+	
+       collection := 	sentenceFinder findAndCollectAllSentencesWithThePrefix: 'Sergio' on: stack.
+	self assert: collection isEmpty
+	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:26'!
+test08SentenceFinderRaisesAnErrorButStackKeepsIntact
+
+	| previousStack |
+	
+	self pushSentencesToStack: stack.
+	previousStack := stack.
+	
+	self should: [sentenceFinder findAndCollectAllSentencesWithThePrefix: 1 on: stack]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = SentenceFinderByPrefix invalidPrefixDescription ].
+	self assert: previousStack = stack! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:25'!
+test09SentenceFinderFindsAtLeastOneSentenceAndStackKeepsIntact
+
+	| previousStack |
+	
+	self pushSentencesToStack: stack.
+	stack push: 'Gabriela Martinez'.
+	previousStack := stack.
+	
+       sentenceFinder findAndCollectAllSentencesWithThePrefix: 'Gabri' on: stack.
+	self assert: previousStack = stack
+	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:25'!
+test10SentenceFinderFindsNoSentenceButStackKeepsIntact
+
+	| previousStack |
+	
+	self pushSentencesToStack: stack.
+	previousStack := stack.
+	
+       sentenceFinder findAndCollectAllSentencesWithThePrefix: 'Sergio' on: stack.
+	self assert: previousStack = stack
+	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'SRM 6/10/2021 17:42:25'!
+test11SentenceFinderRespectsCaseSensitive
+
+	self pushSentencesToStack: stack.
+	stack push: 'Gabriela Martinez'.
+	stack push: 'gabriela gonzalez'. 
+	
+       collection := 	sentenceFinder findAndCollectAllSentencesWithThePrefix: 'Gabri' on: stack.
+	self assert: ((collection size = 1) and: (collection includes: 'Gabriela Martinez'))! !
 
 
 !classDefinition: #OOStack category: 'Stack-Exercise'!
@@ -170,7 +296,7 @@ isEmpty
 
 	^elements isEmpty! !
 
-!OOStack methodsFor: 'public' stamp: 'SRM 6/9/2021 10:17:11'!
+!OOStack methodsFor: 'public' stamp: 'SRM 6/10/2021 15:26:54'!
 pop
 	
 	self canGetAnElement.
@@ -182,7 +308,7 @@ push: anObject
 	elements add: anObject
 	! !
 
-!OOStack methodsFor: 'public' stamp: 'SRM 6/7/2021 19:35:54'!
+!OOStack methodsFor: 'public' stamp: 'SRM 6/10/2021 17:58:35'!
 size
 
 	^elements size! !
@@ -219,6 +345,42 @@ Object subclass: #SentenceFinderByPrefix
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
+!SentenceFinderByPrefix methodsFor: 'public' stamp: 'SRM 6/10/2021 17:53:12'!
+findAndCollectAllSentencesWithThePrefix: aSentencePrefix on: aStack
+
+	| currentSentence collection auxiliarStack |
+
+	(aStack isKindOf: OOStack) ifFalse: [self error: SentenceFinderByPrefix invalidStackDescription ].
+	(aSentencePrefix isKindOf: String) ifFalse: [self error: SentenceFinderByPrefix invalidPrefixDescription].
+	(aSentencePrefix isEmpty or: (aSentencePrefix includesSubString: ' ')) ifTrue: [self error: SentenceFinderByPrefix invalidPrefixDescription].
+		
+	collection := OrderedCollection new.
+	auxiliarStack := aStack.	
+	
+	aStack size timesRepeat: [
+		currentSentence := auxiliarStack pop.
+		(currentSentence beginsWith: aSentencePrefix) ifTrue: [collection add: currentSentence]].
+	^collection
+	
+
+	! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'SentenceFinderByPrefix class' category: 'Stack-Exercise'!
+SentenceFinderByPrefix class
+	instanceVariableNames: ''!
+
+!SentenceFinderByPrefix class methodsFor: 'as yet unclassified' stamp: 'SRM 6/10/2021 15:49:57'!
+invalidPrefixDescription
+
+	^'Invalid prefix'! !
+
+!SentenceFinderByPrefix class methodsFor: 'as yet unclassified' stamp: 'SRM 6/10/2021 16:09:21'!
+invalidStackDescription
+
+	^'Invalid stack'! !
+
 
 !classDefinition: #StackElementsCounter category: 'Stack-Exercise'!
 Object subclass: #StackElementsCounter
@@ -227,7 +389,7 @@ Object subclass: #StackElementsCounter
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!StackElementsCounter methodsFor: 'as yet unclassified' stamp: 'SRM 6/9/2021 10:08:20'!
+!StackElementsCounter methodsFor: 'public' stamp: 'SRM 6/9/2021 10:08:20'!
 thereIsSomeElement
 
 	self subclassResponsibility ! !
@@ -240,7 +402,7 @@ StackElementsCounter subclass: #EmptyStackCounter
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!EmptyStackCounter methodsFor: 'as yet unclassified' stamp: 'SRM 6/9/2021 10:08:20'!
+!EmptyStackCounter methodsFor: 'public' stamp: 'SRM 6/9/2021 10:08:20'!
 thereIsSomeElement
 
 	self error: OOStack stackEmptyErrorDescription! !
@@ -251,7 +413,7 @@ thereIsSomeElement
 EmptyStackCounter class
 	instanceVariableNames: ''!
 
-!EmptyStackCounter class methodsFor: 'as yet unclassified' stamp: 'SRM 6/9/2021 10:01:54'!
+!EmptyStackCounter class methodsFor: 'public' stamp: 'SRM 6/9/2021 10:01:54'!
 canInstantiateFrom: aStackSize
 
 	^aStackSize = 0! !
@@ -264,7 +426,7 @@ StackElementsCounter subclass: #NonEmptyStackCounter
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!NonEmptyStackCounter methodsFor: 'as yet unclassified' stamp: 'SRM 6/9/2021 10:08:20'!
+!NonEmptyStackCounter methodsFor: 'public' stamp: 'SRM 6/9/2021 10:08:20'!
 thereIsSomeElement! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -273,7 +435,7 @@ thereIsSomeElement! !
 NonEmptyStackCounter class
 	instanceVariableNames: ''!
 
-!NonEmptyStackCounter class methodsFor: 'as yet unclassified' stamp: 'SRM 6/9/2021 10:25:55'!
+!NonEmptyStackCounter class methodsFor: 'public' stamp: 'SRM 6/9/2021 10:25:55'!
 canInstantiateFrom: aStackSize
 
 	^aStackSize > 0! !
