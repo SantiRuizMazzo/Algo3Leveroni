@@ -484,23 +484,23 @@ rotarADerecha
 
 	orientacionActual guiarRotacionADerechaDe: self! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:42:04'!
-rotarADerechaHaciaElEste
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:40:12'!
+rotarADerechaApuntandoAlEste
 
 	orientacionActual _ OrientacionSur new! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:42:19'!
-rotarADerechaHaciaElNorte
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:40:22'!
+rotarADerechaApuntandoAlNorte
 
 	orientacionActual _ OrientacionEste new! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:42:26'!
-rotarADerechaHaciaElOeste
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:40:32'!
+rotarADerechaApuntandoAlOeste
 
 	orientacionActual _ OrientacionNorte new! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:42:36'!
-rotarADerechaHaciaElSur
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:41:24'!
+rotarADerechaApuntandoAlSur
 
 	orientacionActual _ OrientacionOeste new! !
 
@@ -509,23 +509,23 @@ rotarAIzquierda
 
 	orientacionActual guiarRotacionAIzquierdaDe: self! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:42:58'!
-rotarAIzquierdaHaciaElEste
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:41:44'!
+rotarAIzquierdaApuntandoAlEste
 
 	orientacionActual _ OrientacionNorte new! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:43:06'!
-rotarAIzquierdaHaciaElNorte
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:42:02'!
+rotarAIzquierdaApuntandoAlNorte
 
 	orientacionActual _ OrientacionOeste new! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:43:15'!
-rotarAIzquierdaHaciaElOeste
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:42:13'!
+rotarAIzquierdaApuntandoAlOeste
 
 	orientacionActual _ OrientacionSur new! !
 
-!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 16:43:26'!
-rotarAIzquierdaHaciaElSur
+!MarsRover methodsFor: 'Ejecucion comandos - privado' stamp: 'SRM 7/1/2021 18:42:30'!
+rotarAIzquierdaApuntandoAlSur
 
 	orientacionActual _ OrientacionEste new! !
 
@@ -633,15 +633,15 @@ guiarRetrocesoDe: unMarsRover
 
 	unMarsRover retrocederApuntandoAlEste! !
 
-!OrientacionEste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:08:09'!
+!OrientacionEste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:40:12'!
 guiarRotacionADerechaDe: unMarsRover
 
-	unMarsRover rotarADerechaHaciaElEste! !
+	unMarsRover rotarADerechaApuntandoAlEste! !
 
-!OrientacionEste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:08:17'!
+!OrientacionEste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:41:44'!
 guiarRotacionAIzquierdaDe: unMarsRover
 
-	unMarsRover rotarAIzquierdaHaciaElEste! !
+	unMarsRover rotarAIzquierdaApuntandoAlEste! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -678,15 +678,15 @@ guiarRetrocesoDe: unMarsRover
 
 	unMarsRover retrocederApuntandoAlNorte! !
 
-!OrientacionNorte methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:08:50'!
+!OrientacionNorte methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:40:22'!
 guiarRotacionADerechaDe: unMarsRover
 
-	unMarsRover rotarADerechaHaciaElNorte! !
+	unMarsRover rotarADerechaApuntandoAlNorte! !
 
-!OrientacionNorte methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:08:56'!
+!OrientacionNorte methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:42:02'!
 guiarRotacionAIzquierdaDe: unMarsRover
 
-	unMarsRover rotarAIzquierdaHaciaElNorte! !
+	unMarsRover rotarAIzquierdaApuntandoAlNorte! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -723,15 +723,15 @@ guiarRetrocesoDe: unMarsRover
 
 	unMarsRover retrocederApuntandoAlOeste! !
 
-!OrientacionOeste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:09:23'!
+!OrientacionOeste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:40:32'!
 guiarRotacionADerechaDe: unMarsRover
 
-	unMarsRover rotarADerechaHaciaElOeste! !
+	unMarsRover rotarADerechaApuntandoAlOeste! !
 
-!OrientacionOeste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:09:28'!
+!OrientacionOeste methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:42:13'!
 guiarRotacionAIzquierdaDe: unMarsRover
 
-	unMarsRover rotarAIzquierdaHaciaElOeste! !
+	unMarsRover rotarAIzquierdaApuntandoAlOeste! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -768,15 +768,15 @@ guiarRetrocesoDe: unMarsRover
 
 	unMarsRover retrocederApuntandoAlSur! !
 
-!OrientacionSur methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:09:49'!
+!OrientacionSur methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:41:24'!
 guiarRotacionADerechaDe: unMarsRover
 
-	unMarsRover rotarADerechaHaciaElSur! !
+	unMarsRover rotarADerechaApuntandoAlSur! !
 
-!OrientacionSur methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 17:10:01'!
+!OrientacionSur methodsFor: 'Guias de movimiento' stamp: 'SRM 7/1/2021 18:42:30'!
 guiarRotacionAIzquierdaDe: unMarsRover
 
-	unMarsRover rotarAIzquierdaHaciaElSur! !
+	unMarsRover rotarAIzquierdaApuntandoAlSur! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
