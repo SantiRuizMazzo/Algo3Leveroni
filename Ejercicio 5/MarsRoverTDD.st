@@ -20,303 +20,229 @@ setUp
 	oeste _ 'O'
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 00:41:46'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:31:39'!
 test01ProcesarComandoVacioNoHaceNada
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ sur.
 	
-	"marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.	
-	marsRover procesarSecuenciaDeComandos: comandoVacio."
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: comandoVacio
+		yAsegurarQue: [self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalInicial)	.]
 	
-	"NUEVO"marsRover _ self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial yMoverSegunComandos: comandoVacio.
-
-	"self assert: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	"
-	"NUEVO"self afirmarMarsRover: marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalInicial.
-
 ! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 00:44:50'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:28:41'!
 test02AvanzarHaciaElNorteAvanzaCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 1@2.
 	inicialPuntoCardinalInicial _ norte.
 	
-	"marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: avanzar.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	"
-	"NUEVO"self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
 		moverSegunComandos: avanzar 
-		yAsegurarQueLaPosicionFinalEs: posicionFinal
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial). ]
 
 ! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:34'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:33:00'!
 test03AvanzarHaciaElSurAvanzaCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 3@2.
 	inicialPuntoCardinalInicial _ sur.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: avanzar.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	
-	! !
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: avanzar
+		yAsegurarQue: [self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial)	.]
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:34'!
+! !
+
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:33:45'!
 test04AvanzarHaciaElEsteAvanzaCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 2@3.
 	inicialPuntoCardinalInicial _ este.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: avanzar.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: avanzar 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial). ]
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:35'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:34:08'!
 test05AvanzarHaciaElOesteAvanzaCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 2@1.
 	inicialPuntoCardinalInicial _ oeste.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: avanzar.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	
-	! !
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: avanzar 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial). ]! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:35'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:34:47'!
 test06RetrocederHaciaElNorteRetrocedeCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 3@2.
 	inicialPuntoCardinalInicial _ norte.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: retroceder.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	
-	! !
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: retroceder 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial). ]	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:35'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:35:58'!
 test07RetrocederHaciaElSurRetrocedeCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 1@2.
 	inicialPuntoCardinalInicial _ sur.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: retroceder.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	
-	! !
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: retroceder 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial). ]	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:35'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:36:42'!
 test08RetrocederHaciaElEsteRetrocedeCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 2@1.
 	inicialPuntoCardinalInicial _ este.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: retroceder.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: retroceder 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial). ]	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:35'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:37:04'!
 test09RetrocederHaciaElOesteRetrocedeCorrectamente
 
 	posicionInicial _ 2@2.
 	posicionFinal _ 2@3.
 	inicialPuntoCardinalInicial _ oeste.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: retroceder.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self assert: (marsRover apuntaA: inicialPuntoCardinalInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: retroceder 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalInicial). ]	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:32'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:37:39'!
 test10RotarADerechaApuntandoAlNorteTerminaApuntandoAlEste
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ norte.
 	inicialPuntoCardinalFinal _ este.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: rotarADerecha.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarADerecha 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:32'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:37:48'!
 test11RotarADerechaApuntandoAlSurTerminaApuntandoAlOeste
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ sur.
 	inicialPuntoCardinalFinal _ oeste.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: rotarADerecha.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarADerecha 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:32'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:38:15'!
 test12RotarADerechaApuntandoAlEsteTerminaApuntandoAlSur
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ este.
 	inicialPuntoCardinalFinal _ sur.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: rotarADerecha.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarADerecha 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:32'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:38:22'!
 test13RotarADerechaApuntandoAlOesteTerminaApuntandoAlNorte
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ oeste.
 	inicialPuntoCardinalFinal _ norte.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: rotarADerecha.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarADerecha 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:40'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:38:39'!
 test14RotarAIzquierdaApuntandoAlNorteTerminaApuntandoAlOeste
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ norte.
 	inicialPuntoCardinalFinal _ oeste.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarAIzquierda 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	
-	marsRover procesarSecuenciaDeComandos: rotarAIzquierda.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:40'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:38:58'!
 test15RotarAIzquierdaApuntandoAlSurTerminaApuntandoAlEste
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ sur.
 	inicialPuntoCardinalFinal _ este.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarAIzquierda 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	
-	marsRover procesarSecuenciaDeComandos: rotarAIzquierda.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:40'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:39:07'!
 test16RotarAIzquierdaApuntandoAlEsteTerminaApuntandoAlNorte
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ este.
 	inicialPuntoCardinalFinal _ norte.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: rotarAIzquierda.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarAIzquierda 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:40'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:39:11'!
 test17RotarAIzquierdaApuntandoAlOesteTerminaApuntandoAlSur
 
 	posicionInicial _ 2@2.
 	inicialPuntoCardinalInicial _ oeste.
 	inicialPuntoCardinalFinal _ sur.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: rotarAIzquierda 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionInicial yApuntaA: inicialPuntoCardinalFinal). ]	
 	
-	marsRover procesarSecuenciaDeComandos: rotarAIzquierda.
-	
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.
-	self assert: (marsRover estaEnPosicion: posicionInicial)	
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:40'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:40:37'!
 test18SePuedeProcesarUnaSecuenciaDeComandosValidos
 
 	| unaSecuenciaDeComandos |
+	
 	unaSecuenciaDeComandos _ rotarADerecha,avanzar,avanzar,comandoVacio,retroceder,rotarADerecha,rotarAIzquierda.
 	posicionInicial _ 2@2.
 	posicionFinal _ 2@3.
 	inicialPuntoCardinalInicial _ norte.
 	inicialPuntoCardinalFinal _ este.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	marsRover procesarSecuenciaDeComandos: unaSecuenciaDeComandos.
-	
-	self deny: (marsRover estaEnPosicion: posicionInicial).
-	self assert: (marsRover estaEnPosicion: posicionFinal)	.
-	self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
-	self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	.! !
+	self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+		moverSegunComandos: unaSecuenciaDeComandos 
+		yAsegurarQue: [ self assert: (marsRover estaEnPosicion: posicionFinal yApuntaA: inicialPuntoCardinalFinal). ]	
+	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:57:40'!
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:42:43'!
 test19SecuenciaDondeHayComandosInvalidosDebeLanzarError
 
 	| unaSecuenciaDeComandos |
@@ -326,35 +252,17 @@ test19SecuenciaDondeHayComandosInvalidosDebeLanzarError
 	inicialPuntoCardinalFinal _ este.
 	unaSecuenciaDeComandos _ rotarADerecha,avanzar,avanzar,comandoInvalido,retroceder,rotarAIzquierda.
 	
-	marsRover _ MarsRover en: posicionInicial apuntandoA: inicialPuntoCardinalInicial.
-	
-	self should: [marsRover procesarSecuenciaDeComandos: unaSecuenciaDeComandos]
+	self should: [self crearMarsRoverEnPosicion: posicionInicial apuntandoA: inicialPuntoCardinalInicial
+				yMoverSegunComandos: unaSecuenciaDeComandos]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 						self assert: anError messageText = marsRover class descripcionDeComandoInvalido.
-						self deny: (marsRover estaEnPosicion: posicionInicial).
 						self assert: (marsRover estaEnPosicion: posicionFinal)	.
-						self deny: (marsRover apuntaA: inicialPuntoCardinalInicial).
 						self assert: (marsRover apuntaA: inicialPuntoCardinalFinal)	]
 	! !
 
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:19:35'!
-test20CrearMarsRoverConPosicionInvalidaDebeLanzarError
-
-	| unaPosicionInicialInvalida |
-	unaPosicionInicialInvalida _ 'hola'.
-	inicialPuntoCardinalInicial _ norte.
-	
-	self should: [ MarsRover en: unaPosicionInicialInvalida apuntandoA: inicialPuntoCardinalInicial]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError | self assert: anError messageText = MarsRover descripcionDePosicionInicialInvalida]
-	
-	"Consultar duda en clase, crear este test nos surgio por seguir la heuristica de crear objetos completos y validos"
-	"Deberiamos eliminar este test"
-	! !
-
-!TestsMarsRover methodsFor: 'tests' stamp: 'agg 6/30/2021 23:26:45'!
-test21CrearMarsRoverConDireccionInvalidaDebeLanzarError
+!TestsMarsRover methodsFor: 'tests' stamp: 'agg 7/1/2021 09:52:02'!
+test20CrearMarsRoverConDireccionInvalidaDebeLanzarError
 
 	| unaDireccionInicialInvalida |
 	posicionInicial _ 2@2.
@@ -362,29 +270,19 @@ test21CrearMarsRoverConDireccionInvalidaDebeLanzarError
 	
 	self should: [ MarsRover en: posicionInicial apuntandoA: unaDireccionInicialInvalida]
 		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError | self assert: anError messageText = MarsRover descripcionDePuntoCardinalInicialInvalida]
+		withExceptionDo: [ :anError | self assert: anError messageText = MarsRover descripcionDePuntoCardinalInicialInvalida].
 	
-	
-	! !
+	"self unaExcepcionDebeSerLanzadaCon:  [ MarsRover en: posicionInicial apuntandoA: unaDireccionInicialInvalida]
+		ySeDebeHacer: [ :anError | self assert: anError messageText = MarsRover descripcionDePuntoCardinalInicialInvalida]."	! !
 
 
-!TestsMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:35:24'!
-afirmarMarsRover: unMarsRover estaEnPosicion: unaPosicionFinal yApuntaA: unPuntoCardinalFinal
-	
-	self assert: (unMarsRover estaEnPosicion: unaPosicionFinal)	.
-	self assert: (unMarsRover apuntaA: unPuntoCardinalFinal)	.! !
-
-!TestsMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:42:20'!
-crearMarsRoverEnPosicion: unaPosicionInicial apuntandoA: unPuntoCardinalInicial moverSegunComandos: secuenciaDeComandos yAsegurarQueLaPosicionFinalEs: unaPosicionFinal
+!TestsMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 09:26:54'!
+crearMarsRoverEnPosicion: unaPosicionInicial apuntandoA: unPuntoCardinalInicial moverSegunComandos: secuenciaDeComandos
+yAsegurarQue: unaAfirmacionAAsegurar
 
 	marsRover _ self crearMarsRoverEnPosicion: posicionInicial apuntandoA: unPuntoCardinalInicial yMoverSegunComandos: secuenciaDeComandos.
-	self afirmarMarsRover: marsRover estaEnPosicion: unaPosicionFinal yApuntaA: unPuntoCardinalInicial.! !
-
-!TestsMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:42:55'!
-crearMarsRoverEnPosicion: unaPosicionInicial apuntandoA: unPuntoCardinalInicial rotarSegunComandos: secuenciaDeComandos yAsegurarQueElPuntoCardinalFinalEs: unPuntoCardinalFinal
-
-	marsRover _ self crearMarsRoverEnPosicion: unaPosicionInicial apuntandoA: unPuntoCardinalInicial yMoverSegunComandos: secuenciaDeComandos.
-	self afirmarMarsRover: marsRover estaEnPosicion: unaPosicionInicial yApuntaA: unPuntoCardinalFinal.! !
+	unaAfirmacionAAsegurar value	.
+! !
 
 !TestsMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:41:08'!
 crearMarsRoverEnPosicion: unaPosicionInicial apuntandoA: unaInicialPuntoCardinalInicial yMoverSegunComandos: unaSecuenciaDeComandos
@@ -532,15 +430,20 @@ Object subclass: #MarsRover
 	poolDictionaries: ''
 	category: 'MarsRoverTDD'!
 
-!MarsRover methodsFor: 'Verificaciones' stamp: 'agg 6/30/2021 23:21:11'!
+!MarsRover methodsFor: 'Verificaciones' stamp: 'agg 7/1/2021 09:59:36'!
 apuntaA: unaInicialPuntoCardinal
 	
-	^self inicialPuntoCardinal = unaInicialPuntoCardinal! !
+	^puntoCardinalActual comienzaCon: unaInicialPuntoCardinal! !
 
-!MarsRover methodsFor: 'Verificaciones' stamp: 'SRM 6/29/2021 17:32:07'!
+!MarsRover methodsFor: 'Verificaciones' stamp: 'agg 7/1/2021 09:12:57'!
 estaEnPosicion: unaPosicion
 	
 	^posicionActual = unaPosicion ! !
+
+!MarsRover methodsFor: 'Verificaciones' stamp: 'agg 7/1/2021 09:14:17'!
+estaEnPosicion: unaPosicion yApuntaA: unaOrientacion
+	
+	^(self estaEnPosicion: unaPosicion) and: [self apuntaA: unaOrientacion]! !
 
 
 !MarsRover methodsFor: 'Procesamiento' stamp: 'agg 7/1/2021 00:11:30'!
@@ -567,46 +470,56 @@ inicializarEn: unaPosicionInicial apuntandoA: unPuntoCardinalInicial
 	puntoCardinalActual _ unPuntoCardinalInicial! !
 
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:50:43'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 09:53:00'!
 avanzar
+
 	puntoCardinalActual seAvanza: self
 ! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:37:50'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 09:53:06'!
 avanzarHaciaElEste
+
 	posicionActual _ posicionActual + (0@1)! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:38:04'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 09:53:43'!
 avanzarHaciaElNorte
+
 	posicionActual _ posicionActual - (1@0)! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:38:38'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 09:59:50'!
 avanzarHaciaElOeste
+
 	posicionActual _ posicionActual - (0@1)! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:39:11'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 09:59:55'!
 avanzarHaciaElSur
+
 	posicionActual _ posicionActual + (1@0)! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:50:43'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 09:59:59'!
 retroceder
+
 	puntoCardinalActual seRetrocede: self
 ! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:40:38'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:08'!
 retrocederHaciaElEste
+
 	posicionActual _ posicionActual - (0@1)! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:40:06'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:14'!
 retrocederHaciaElNorte
+
 	posicionActual _ posicionActual + (1@0)! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:40:42'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:18'!
 retrocederHaciaElOeste
+
 	posicionActual _ posicionActual + (0@1)! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:40:23'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:22'!
 retrocederHaciaElSur
+
 	posicionActual _ posicionActual - (1@0)! !
 
 !MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:59:57'!
@@ -614,20 +527,24 @@ rotarADerecha
 
 	puntoCardinalActual seRotaADerecha: self! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:55:26'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:29'!
 rotarADerechaHaciaElEste
+
 	puntoCardinalActual _ Sur new! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:55:40'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:35'!
 rotarADerechaHaciaElNorte
+
 	puntoCardinalActual _ Este new! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:55:54'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:40'!
 rotarADerechaHaciaElOeste
+
 	puntoCardinalActual _ Norte new! !
 
-!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 6/30/2021 23:56:25'!
+!MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 10:00:44'!
 rotarADerechaHaciaElSur
+
 	puntoCardinalActual _ Oeste new! !
 
 !MarsRover methodsFor: 'Movimientos - privado' stamp: 'agg 7/1/2021 00:06:25'!
@@ -656,10 +573,6 @@ rotarAIzquierdaHaciaElSur
 	puntoCardinalActual _ Este new! !
 
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:50:43'!
-inicialPuntoCardinal
-	^(puntoCardinalActual letra)! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'MarsRover class' category: 'MarsRoverTDD'!
@@ -671,65 +584,57 @@ descripcionDeComandoInvalido
 	
 	^'Comando invalido'! !
 
-!MarsRover class methodsFor: 'Descripciones de error' stamp: 'SRM 6/30/2021 17:41:21'!
-descripcionDePosicionInicialInvalida
-
-	^'Posicion inicial invalida'! !
-
 !MarsRover class methodsFor: 'Descripciones de error' stamp: 'agg 6/30/2021 23:26:45'!
 descripcionDePuntoCardinalInicialInvalida
 
 	^'Punto cardinal inicial invalido'! !
 
 
-!MarsRover class methodsFor: 'Instanciacion' stamp: 'agg 7/1/2021 00:14:03'!
+!MarsRover class methodsFor: 'Instanciacion' stamp: 'agg 7/1/2021 09:04:47'!
 en: unaPosicionInicial apuntandoA: unaInicialDePuntoCardinal
 
 	| unPuntoCardinalInicial |
 	
-	"En creacion de objetos no hacer chequeos de tipo porque puede llegar a perjudicar polimorfismo"
-	(unaPosicionInicial isKindOf: Point) ifFalse: [self error: self descripcionDePosicionInicialInvalida].	
-	
-	unPuntoCardinalInicial _ PuntoCardinal conInicial: unaInicialDePuntoCardinal.
+	unPuntoCardinalInicial _ OrientacionDeMarsRover conInicial: unaInicialDePuntoCardinal.
 
 	^MarsRover new inicializarEn: unaPosicionInicial apuntandoA: unPuntoCardinalInicial
 	! !
 
 
-!classDefinition: #PuntoCardinal category: 'MarsRoverTDD'!
-Object subclass: #PuntoCardinal
+!classDefinition: #OrientacionDeMarsRover category: 'MarsRoverTDD'!
+Object subclass: #OrientacionDeMarsRover
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRoverTDD'!
 
-!PuntoCardinal methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:17:33'!
-letra
-	self subclassResponsibility! !
+!OrientacionDeMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 09:56:29'!
+comienzaCon: letra
+	self subclassResponsibility.! !
 
-!PuntoCardinal methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:43:21'!
+!OrientacionDeMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:43:21'!
 seAvanza: unMarsRover
 	self subclassResponsibility! !
 
-!PuntoCardinal methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:43:26'!
+!OrientacionDeMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:43:26'!
 seRetrocede: unMarsRover
 	self subclassResponsibility! !
 
-!PuntoCardinal methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:54:29'!
+!OrientacionDeMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:54:29'!
 seRotaADerecha: unMarsRover
 	self subclassResponsibility! !
 
-!PuntoCardinal methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:05:13'!
+!OrientacionDeMarsRover methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:05:13'!
 seRotaAIzquierda: unMarsRover
 	self subclassResponsibility! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'PuntoCardinal class' category: 'MarsRoverTDD'!
-PuntoCardinal class
+!classDefinition: 'OrientacionDeMarsRover class' category: 'MarsRoverTDD'!
+OrientacionDeMarsRover class
 	instanceVariableNames: ''!
 
-!PuntoCardinal class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:14:37'!
+!OrientacionDeMarsRover class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:14:37'!
 conInicial: unaInicialDePuntoCardinal
 
 	| subclase |
@@ -737,22 +642,22 @@ conInicial: unaInicialDePuntoCardinal
 		ifNone: [self error: MarsRover descripcionDePuntoCardinalInicialInvalida].
 	^subclase new! !
 
-!PuntoCardinal class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:14:37'!
-tieneComoInicialA: ccc
+!OrientacionDeMarsRover class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 10:03:48'!
+tieneComoInicialA: inicial
 
 	self subclassResponsibility ! !
 
 
 !classDefinition: #Este category: 'MarsRoverTDD'!
-PuntoCardinal subclass: #Este
+OrientacionDeMarsRover subclass: #Este
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRoverTDD'!
 
-!Este methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:16:56'!
-letra
-	^'E'! !
+!Este methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 09:57:43'!
+comienzaCon: letraAComparar
+	^('E' = letraAComparar).! !
 
 !Este methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:37:50'!
 seAvanza: unMarsRover
@@ -776,22 +681,22 @@ seRotaAIzquierda: unMarsRover
 Este class
 	instanceVariableNames: ''!
 
-!Este class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:14:37'!
-tieneComoInicialA: ccc
+!Este class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 08:42:55'!
+tieneComoInicialA: inicial
 
-	^ccc = 'E'! !
+	^inicial = 'E'! !
 
 
 !classDefinition: #Norte category: 'MarsRoverTDD'!
-PuntoCardinal subclass: #Norte
+OrientacionDeMarsRover subclass: #Norte
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRoverTDD'!
 
-!Norte methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:17:08'!
-letra
-	^'N'! !
+!Norte methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 09:58:06'!
+comienzaCon: letraAComparar
+	^('N' = letraAComparar).! !
 
 !Norte methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:38:04'!
 seAvanza: unMarsRover
@@ -815,22 +720,22 @@ seRotaAIzquierda: unMarsRover
 Norte class
 	instanceVariableNames: ''!
 
-!Norte class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:14:37'!
-tieneComoInicialA: ccc
+!Norte class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 08:43:04'!
+tieneComoInicialA: inicial
 
-	^ccc = 'N'! !
+	^inicial = 'N'! !
 
 
 !classDefinition: #Oeste category: 'MarsRoverTDD'!
-PuntoCardinal subclass: #Oeste
+OrientacionDeMarsRover subclass: #Oeste
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRoverTDD'!
 
-!Oeste methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:17:14'!
-letra
-	^'O'! !
+!Oeste methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 09:58:20'!
+comienzaCon: letraAComparar
+	^('O' = letraAComparar).! !
 
 !Oeste methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:38:39'!
 seAvanza: unMarsRover
@@ -854,22 +759,22 @@ seRotaAIzquierda: unMarsRover
 Oeste class
 	instanceVariableNames: ''!
 
-!Oeste class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:14:37'!
-tieneComoInicialA: ccc
+!Oeste class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 08:43:09'!
+tieneComoInicialA: inicial
 
-	^ccc = 'O'! !
+	^inicial = 'O'! !
 
 
 !classDefinition: #Sur category: 'MarsRoverTDD'!
-PuntoCardinal subclass: #Sur
+OrientacionDeMarsRover subclass: #Sur
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRoverTDD'!
 
-!Sur methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:17:19'!
-letra
-	^'S'! !
+!Sur methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 09:58:36'!
+comienzaCon: letraAComparar
+	^('S' = letraAComparar).! !
 
 !Sur methodsFor: 'as yet unclassified' stamp: 'agg 6/30/2021 23:39:11'!
 seAvanza: unMarsRover
@@ -893,7 +798,7 @@ seRotaAIzquierda: unMarsRover
 Sur class
 	instanceVariableNames: ''!
 
-!Sur class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 00:14:37'!
-tieneComoInicialA: ccc
+!Sur class methodsFor: 'as yet unclassified' stamp: 'agg 7/1/2021 08:43:18'!
+tieneComoInicialA: inicial
 
-	^ccc = 'S'! !
+	^inicial = 'S'! !
