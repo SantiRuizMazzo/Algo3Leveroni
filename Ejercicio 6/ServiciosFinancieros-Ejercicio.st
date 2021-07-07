@@ -5,7 +5,7 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!PortfolioTest methodsFor: 'test' stamp: 'SRM 7/5/2021 21:12:57'!
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/5/2021 21:12:57'!
 test01BalanceOfEmptyPortfolioIsZero
 	
 	| aPortfolio |
@@ -14,7 +14,7 @@ test01BalanceOfEmptyPortfolioIsZero
 	
 	self assert: 0*peso equals: aPortfolio balance! !
 
-!PortfolioTest methodsFor: 'test' stamp: 'SRM 7/5/2021 21:24:27'!
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/5/2021 21:24:27'!
 test02BalanceOfPortfolioWithOnlyOneAccountIsEqualToItsBalance
 	
 	| aPortfolio anAccount |
@@ -27,7 +27,7 @@ test02BalanceOfPortfolioWithOnlyOneAccountIsEqualToItsBalance
 	
 	self assert: 50*peso equals: aPortfolio balance! !
 
-!PortfolioTest methodsFor: 'test' stamp: 'SRM 7/5/2021 21:15:35'!
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/5/2021 21:15:35'!
 test03BalanceOfPortfolioWithMoreThanOneAccountIsTheSumOfAllAccountsBalances
 	
 	| aPortfolio anAccount anotherAccount |
@@ -44,23 +44,25 @@ test03BalanceOfPortfolioWithMoreThanOneAccountIsTheSumOfAllAccountsBalances
 	
 	self assert: 150*peso equals: aPortfolio balance! !
 
-!PortfolioTest methodsFor: 'test' stamp: 'SRM 7/6/2021 21:05:25'!
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 15:04:49'!
 test04PortfolioKnowsRegisteredTransactions
 	
-	| aPortfolio aReceptiveAccount anotherAccount aDeposit anotherDeposit |
+	| aPortfolio anAccount anotherAccount aDeposit anotherDeposit |
 	
-	aReceptiveAccount _ ReceptiveAccount new.
-	aDeposit _ Deposit register: 10*peso on: aReceptiveAccount.
+	anAccount _ ReceptiveAccount new.
+	aDeposit _ Deposit register: 10*peso on: anAccount.
+	
 	anotherAccount _ ReceptiveAccount new.
 	anotherDeposit _  Deposit register: 10*peso on: anotherAccount.
+	
 	aPortfolio _ Portfolio new.
-	aPortfolio add: aReceptiveAccount.
+	aPortfolio add: anAccount.
 	aPortfolio add: anotherAccount.
 	
 	self assert: (aPortfolio hasRegistered: aDeposit).	
 	self assert: (aPortfolio hasRegistered: anotherDeposit).! !
 
-!PortfolioTest methodsFor: 'test' stamp: 'SRM 7/6/2021 21:05:31'!
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/6/2021 21:05:31'!
 test05PortfolioDoesNotKnowNotRegisteredTransactions
 	
 	| aPortfolio aReceptiveAccount aDeposit |
@@ -72,7 +74,7 @@ test05PortfolioDoesNotKnowNotRegisteredTransactions
 	
 	self deny: (aPortfolio hasRegistered: aDeposit)! !
 
-!PortfolioTest methodsFor: 'test' stamp: 'SRM 7/6/2021 21:23:31'!
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/6/2021 21:23:31'!
 test06EmptyPortfolioHasNoTransactions
 	
 	| aPortfolio |
@@ -81,8 +83,8 @@ test06EmptyPortfolioHasNoTransactions
 	
 	self assert: 0 equals: aPortfolio transactions size! !
 
-!PortfolioTest methodsFor: 'test' stamp: 'SRM 7/6/2021 21:34:03'!
-test07
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 15:18:00'!
+test07PortfolioWithOnlyOneTransactionKnowsIt
 	
 	| aPortfolio anAccount aDeposit |
 	
@@ -93,6 +95,30 @@ test07
 	
 	self assert: 1 equals: aPortfolio transactions size.
 	self assert: (aPortfolio transactions includes: aDeposit)! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 15:40:03'!
+test08PortfolioWithManyTransactionsKnowsThem
+	
+	| aPortfolio anAccount anotherAccount aDeposit anotherDeposit aWithdraw anotherWithdraw |
+	
+	anAccount _ ReceptiveAccount new.
+	aDeposit _ Deposit register: 10*peso on: anAccount.
+	aWithdraw _ Withdraw register: 5*peso on: anAccount.
+	
+	anotherAccount _ ReceptiveAccount new.
+	anotherDeposit _  Deposit register: 10*peso on: anotherAccount.
+	anotherWithdraw _ Withdraw register: 2*peso on: anotherAccount.
+	
+	aPortfolio _ Portfolio new.
+	aPortfolio add: anAccount.
+	aPortfolio add: anotherAccount.
+	
+	self assert: 4 equals: aPortfolio transactions size.
+	self assert: (aPortfolio transactions includes: aDeposit).
+	self assert: (aPortfolio transactions includes: anotherDeposit).
+	self assert: (aPortfolio transactions includes: aWithdraw).
+	self assert: (aPortfolio transactions includes: anotherWithdraw)
+	! !
 
 
 !classDefinition: #ReceptiveAccountTest category: 'ServiciosFinancieros-Ejercicio'!
@@ -193,7 +219,7 @@ TestCase subclass: #TransferTest
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 16:54:18'!
+!TransferTest methodsFor: 'tests' stamp: 'SRM 7/6/2021 16:54:18'!
 test01TransferDecreasesBalanceOnSenderAccountAndIncreasesBalanceOnReceiverAccount
 
 	| senderAccount receiverAccount |
@@ -208,8 +234,8 @@ test01TransferDecreasesBalanceOnSenderAccountAndIncreasesBalanceOnReceiverAccoun
 	self assert: 5*peso equals: senderAccount balance.
 	self assert: 5*peso equals: receiverAccount balance! !
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 17:15:15'!
-test02TransferFromAccountWithNotEnoughMoneyShouldRaiseAnError
+!TransferTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 14:27:48'!
+test02TransferFromAccountWithInsufficientBalanceShouldRaiseAnError
 
 	| senderAccount receiverAccount |
 	
@@ -218,27 +244,27 @@ test02TransferFromAccountWithNotEnoughMoneyShouldRaiseAnError
 	
 	self should: [Transfer register: 5*peso from: senderAccount to: receiverAccount] 
 		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [			:anError | 			self assert: anError messageText = Transfer notEnoughMoneyErrorDescription.
+		withExceptionDo: [			:anError | 			self assert: anError messageText = Transfer insufficientBalanceErrorDescription.
 								self assert: 0*peso equals: senderAccount balance.
 								self assert: 0*peso equals: receiverAccount balance]
 ! !
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 16:59:40'!
+!TransferTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 09:26:24'!
 test03TransferKnowsItsOwnValue
 
-	| senderAccount receiverAccount transfer |
+	| senderAccount receiverAccount aTransfer |
 	
 	senderAccount _ ReceptiveAccount new.
 	Deposit register: 10*peso on: senderAccount.
 	
 	receiverAccount _ ReceptiveAccount new.
 	
-	transfer _ Transfer register: 5*peso from: senderAccount to: receiverAccount.
+	aTransfer _ Transfer register: 5*peso from: senderAccount to: receiverAccount.
 	
-	self assert: 5*peso equals: transfer value! !
+	self assert: 5*peso equals: aTransfer value! !
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 17:07:19'!
-test04TransferIsRegisteredInSenderAndReceiverAccounts
+!TransferTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 11:43:07'!
+test04TransferIsRegisteredOnSenderAndReceiverAccounts
 
 	| senderAccount receiverAccount deposit transfer |
 	
@@ -249,11 +275,11 @@ test04TransferIsRegisteredInSenderAndReceiverAccounts
 	
 	transfer _ Transfer register: 5*peso from: senderAccount to: receiverAccount.
 		
-	self assert: (senderAccount hasRegistered: transfer withdraw).
-	self assert: (receiverAccount hasRegistered: transfer deposit).! !
+	self assert: (senderAccount hasRegistered: transfer withdrawSide).
+	self assert: (receiverAccount hasRegistered: transfer depositSide).! !
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 17:33:11'!
-test05TransferWithANonPositiveValueShouldRaiseAnError
+!TransferTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 14:30:54'!
+test05TransferWithAnInvalidValueShouldRaiseAnError
 
 	| senderAccount receiverAccount |
 	
@@ -262,12 +288,12 @@ test05TransferWithANonPositiveValueShouldRaiseAnError
 	
 	self should: [Transfer register: -5*peso from: senderAccount to: receiverAccount] 
 		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [			:anError | 			self assert: anError messageText = 'Valor invalido'.
+		withExceptionDo: [			:anError | 			self assert: anError messageText = Transfer invalidValueErrorDescription.
 								self assert: 0*peso equals: senderAccount balance.
 								self assert: 0*peso equals: receiverAccount balance]! !
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 18:03:01'!
-test06
+!TransferTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 11:43:45'!
+test06WithdrawSideOfTransferKnowsItsOppositeSide
 
 	| senderAccount receiverAccount aTransfer |
 	
@@ -278,10 +304,10 @@ test06
 	
 	aTransfer _ Transfer register: 5*peso from: senderAccount to: receiverAccount.
 	
-	self assert: aTransfer withdraw contraparte equals: aTransfer deposit! !
+	self assert: aTransfer withdrawSide oppositeSide equals: aTransfer depositSide! !
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 21:05:39'!
-test06EmptyPortfolioHasNoTransactions
+!TransferTest methodsFor: 'tests' stamp: 'SRM 7/7/2021 15:02:05'!
+test07DepositSideOfTransferKnowsItsOppositeSide
 
 	| senderAccount receiverAccount aTransfer |
 	
@@ -292,7 +318,7 @@ test06EmptyPortfolioHasNoTransactions
 	
 	aTransfer _ Transfer register: 5*peso from: senderAccount to: receiverAccount.
 	
-	self assert: aTransfer deposit contraparte equals: aTransfer withdraw! !
+	self assert: aTransfer depositSide oppositeSide equals: aTransfer withdrawSide! !
 
 
 !classDefinition: #AccountTransaction category: 'ServiciosFinancieros-Ejercicio'!
@@ -302,32 +328,31 @@ Object subclass: #AccountTransaction
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!AccountTransaction methodsFor: 'value' stamp: 'SRM 7/5/2021 15:54:53'!
+!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:40:52'!
+effectOnBalance: aBalance
+
+	self subclassResponsibility ! !
+
+!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:03:27'!
+initializeFor: aValue
+
+	value _ aValue ! !
+
+!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'SRM 7/5/2021 15:54:53'!
 value 
 
 	^value ! !
-
-
-!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 18:08:27'!
-contraparte
-	
-	^contraparte! !
-
-!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 18:08:48'!
-suContraparteEs: unaTransaccion
-
-	contraparte _ unaTransaccion! !
-
-!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'SRM 7/5/2021 19:45:38'!
-valueForBalance
-
-	^value! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'AccountTransaction class' category: 'ServiciosFinancieros-Ejercicio'!
 AccountTransaction class
 	instanceVariableNames: ''!
+
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'SRM 7/7/2021 10:02:41'!
+for: aValue
+
+	^ self new initializeFor: aValue ! !
 
 !AccountTransaction class methodsFor: 'instance creation' stamp: 'NR 10/17/2019 03:22:00'!
 register: aValue on: account
@@ -347,22 +372,10 @@ AccountTransaction subclass: #Deposit
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!Deposit methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:45'!
-initializeFor: aValue
+!Deposit methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:41:25'!
+effectOnBalance: aBalance
 
-	value := aValue ! !
-
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Deposit class' category: 'ServiciosFinancieros-Ejercicio'!
-Deposit class
-	instanceVariableNames: ''!
-
-!Deposit class methodsFor: 'instance creation' stamp: 'HernanWilkinson 7/13/2011 18:38'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
+	^aBalance + self value! !
 
 
 !classDefinition: #Withdraw category: 'ServiciosFinancieros-Ejercicio'!
@@ -372,28 +385,10 @@ AccountTransaction subclass: #Withdraw
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!Withdraw methodsFor: 'initialization' stamp: 'SRM 7/4/2021 17:28:35'!
-initializeFor: aValue
+!Withdraw methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:41:41'!
+effectOnBalance: aBalance
 
-	value := aValue! !
-
-
-
-!Withdraw methodsFor: 'as yet unclassified' stamp: 'SRM 7/5/2021 19:45:38'!
-valueForBalance
-
-	^self value negated! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Withdraw class' category: 'ServiciosFinancieros-Ejercicio'!
-Withdraw class
-	instanceVariableNames: ''!
-
-!Withdraw class methodsFor: 'instance creation' stamp: 'SRM 7/4/2021 15:53:55'!
-for: aValue
-
-	^ self new initializeFor: aValue! !
+	^aBalance - self value! !
 
 
 !classDefinition: #Portfolio category: 'ServiciosFinancieros-Ejercicio'!
@@ -424,13 +419,12 @@ initialize
 
 	accounts _ OrderedCollection new! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 21:37:29'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 15:38:27'!
 transactions
 	
-	"^OrderedCollection new add: (accounts first transactions first)"
 	| unaColeccion |
 	unaColeccion _ OrderedCollection new.
-	unaColeccion _ accounts collect: [:anAccount | anAccount transactions first].
+	unaColeccion _ accounts inject: (OrderedCollection new) into: [:aCollection :anAccount | aCollection addAll: anAccount transactions. 																		  																		            																		   aCollection].
 	^unaColeccion! !
 
 
@@ -447,10 +441,10 @@ initialize
 	transactions := OrderedCollection new.! !
 
 
-!ReceptiveAccount methodsFor: 'main protocol' stamp: 'SRM 7/5/2021 19:45:38'!
+!ReceptiveAccount methodsFor: 'main protocol' stamp: 'SRM 7/7/2021 10:43:06'!
 balance
 
-	^transactions sum: [:aTransaction | aTransaction valueForBalance] ifEmpty: [ 0 ]! !
+	^transactions inject: 0*peso into: [:currentBalance :aTransaction | aTransaction effectOnBalance: currentBalance]! !
 
 !ReceptiveAccount methodsFor: 'main protocol' stamp: 'NR 10/17/2019 03:28:43'!
 hasRegistered: aTransaction
@@ -472,34 +466,33 @@ transactions
 
 !classDefinition: #Transfer category: 'ServiciosFinancieros-Ejercicio'!
 Object subclass: #Transfer
-	instanceVariableNames: 'withdraw deposit value'
+	instanceVariableNames: 'withdrawSide depositSide value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!Transfer methodsFor: 'as yet unclassified' stamp: 'SRM 7/5/2021 09:04:19'!
-deposit
+!Transfer methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 11:52:53'!
+depositSide
 
-	^deposit ! !
+	^depositSide ! !
 
-!Transfer methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 18:09:32'!
-initializeFor: aValue from: accountA to: accountB
+!Transfer methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 11:52:53'!
+initializeFor: aValue from: senderAccount to: receiverAccount
 
-	withdraw _ Withdraw register: aValue on: accountA.
-	deposit _ Deposit register: aValue on: accountB.
-	withdraw suContraparteEs: deposit.
-	deposit suContraparteEs: withdraw.
-	value _ aValue! !
+	value _ aValue.
+	withdrawSide _ WithdrawSide beRegisteredBy: self on: senderAccount.
+	depositSide _ DepositSide beRegisteredBy: self on: receiverAccount
+	! !
 
 !Transfer methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 16:57:59'!
 value
 
 	^value! !
 
-!Transfer methodsFor: 'as yet unclassified' stamp: 'SRM 7/5/2021 09:04:11'!
-withdraw
+!Transfer methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 11:52:46'!
+withdrawSide
 
-	^withdraw! !
+	^withdrawSide! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -507,45 +500,106 @@ withdraw
 Transfer class
 	instanceVariableNames: 'withdraw deposit'!
 
-!Transfer class methodsFor: 'x' stamp: 'SRM 7/4/2021 18:57:36'!
-notEnoughMoneyErrorDescription
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 14:25:59'!
+insufficientBalanceErrorDescription
 
-	^'Not enough money'! !
+	^'Insufficient sender account balance'! !
 
-!Transfer class methodsFor: 'x' stamp: 'SRM 7/6/2021 17:26:56'!
-register: aValue from: accountA to: accountB
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 09:55:45'!
+invalidValueErrorDescription
+	
+	^'Invalid value'! !
 
-	aValue <= (0*peso) ifTrue: [self error: 'Valor invalido'].
-	(accountA balance < aValue) ifTrue: [self error: self notEnoughMoneyErrorDescription].
-	^self new initializeFor: aValue from: accountA to: accountB.! !
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 14:23:41'!
+register: aValue from: senderAccount to: receiverAccount
 
+	aValue <= (0*peso) ifTrue: [self error: self invalidValueErrorDescription].
+	(senderAccount balance < aValue) ifTrue: [self error: self insufficientBalanceErrorDescription].
+	^self new initializeFor: aValue from: senderAccount to: receiverAccount.! !
 
 
-!classDefinition: #TransferPart category: 'ServiciosFinancieros-Ejercicio'!
-Object subclass: #TransferPart
+!classDefinition: #TransferSide category: 'ServiciosFinancieros-Ejercicio'!
+Object subclass: #TransferSide
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!TransferSide methodsFor: 'Initialization' stamp: 'SRM 7/7/2021 12:01:24'!
+initializeFor: aTransfer
+
+	transfer _ aTransfer! !
+
+
+!TransferSide methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:43:51'!
+effectOnBalance: aBalance
+
+	self subclassResponsibility ! !
+
+!TransferSide methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 11:43:45'!
+oppositeSide
+
+	self subclassResponsibility ! !
+
+!TransferSide methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:46:40'!
+value
+
+	^transfer value
+
+	! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TransferSide class' category: 'ServiciosFinancieros-Ejercicio'!
+TransferSide class
+	instanceVariableNames: ''!
+
+!TransferSide class methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 12:03:02'!
+beRegisteredBy: aTransfer on: anAccount
+
+	| aTransferSide |
+
+	aTransferSide _ self of: aTransfer.
+	anAccount register: aTransferSide.
+	^aTransferSide! !
+
+!TransferSide class methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 12:06:09'!
+of: aTransfer
+
+	^self new initializeFor: aTransfer! !
+
+
+!classDefinition: #DepositSide category: 'ServiciosFinancieros-Ejercicio'!
+TransferSide subclass: #DepositSide
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
+!DepositSide methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:44:19'!
+effectOnBalance: aBalance
+
+	^aBalance + self value! !
+
+!DepositSide methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 11:43:45'!
+oppositeSide
+
+	^transfer withdrawSide ! !
+
 
-!classDefinition: #DepositPart category: 'ServiciosFinancieros-Ejercicio'!
-TransferPart subclass: #DepositPart
+!classDefinition: #WithdrawSide category: 'ServiciosFinancieros-Ejercicio'!
+TransferSide subclass: #WithdrawSide
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!DepositPart methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 18:27:55'!
-value! !
+!WithdrawSide methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 10:44:29'!
+effectOnBalance: aBalance
 
-
-!classDefinition: #WithdrawPart category: 'ServiciosFinancieros-Ejercicio'!
-TransferPart subclass: #WithdrawPart
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Ejercicio'!
+	^aBalance - self value! !
 
-!WithdrawPart methodsFor: 'as yet unclassified' stamp: 'SRM 7/6/2021 18:27:59'!
-value! !
+!WithdrawSide methodsFor: 'as yet unclassified' stamp: 'SRM 7/7/2021 11:43:45'!
+oppositeSide
+
+	^transfer depositSide ! !
