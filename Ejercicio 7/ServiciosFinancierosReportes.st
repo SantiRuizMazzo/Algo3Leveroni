@@ -11,30 +11,33 @@ test13TransferNetOfAccountWithoutAnyTransactionsMustBeZero
 	self assertPortfolioAfterTransactions: [] andAdditionOfAccounts: (OrderedCollection new) hasAccountTransferNet: (0*peso).
 ! !
 
-!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:37:21'!
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:45:51'!
 test14TransferNetOfAccountWithOneTransferDepositLegMustBePositive
 
-	Deposit register: 15*peso on: anotherAccount.
-	Transfer amount: 10*peso from: anotherAccount to: anAccount.
-	
-	self assert: 10*peso equals: (TransferNet of: anAccount) obtain! !
+	self assertReceptiveAccountAfterTransactions: [
+			Deposit register: 15*peso on: anotherAccount.
+			Transfer amount: 10*peso from: anotherAccount to: anAccount.]
+		hasAccountTransferNet: (10*peso)
+! !
 
-!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 17:48:04'!
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:45:51'!
 test15TransferNetOfAccountWithOneTransferWithdrawLegMustBeNegative
 
-	Deposit register: 15*peso on: anAccount.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	
-	self assert: -10*peso equals: (TransferNet of: anAccount) obtain.! !
+	self assertReceptiveAccountAfterTransactions: [
+			Deposit register: 15*peso on: anAccount.
+			Transfer amount: 10*peso from: anAccount to: anotherAccount.]
+		hasAccountTransferNet: (-10*peso)
+! !
 
-!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 17:38:15'!
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:45:51'!
 test16TransferNetOfAccountWithManyTransferLegsMustBeOK
 
-	Deposit register: 15*peso on: anAccount.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	Transfer amount: 5*peso from: anotherAccount to: anAccount.
-	
-	self assert: -5*peso equals: (TransferNet of: anAccount) obtain! !
+	self assertReceptiveAccountAfterTransactions: [
+			Deposit register: 15*peso on: anAccount.
+			Transfer amount: 10*peso from: anAccount to: anotherAccount.
+			Transfer amount: 5*peso from: anotherAccount to: anAccount.]
+		hasAccountTransferNet: (-5*peso)
+! !
 
 !AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:38:49'!
 test17TransferNetOfPortfolioWithoutAnyTransactionsMustBeZero
@@ -185,6 +188,13 @@ assertReceptiveAccountAfterTransactions: transactions hasAccountSummaryLines: su
 	
 	transactions value.
 	self assert: summaryLines equals: (Summary of: anAccount) obtain! !
+
+!AccountReportTest methodsFor: 'private' stamp: 'agg 7/15/2021 18:45:51'!
+assertReceptiveAccountAfterTransactions: transactionsOnAccounts hasAccountTransferNet: transferNet
+	
+	transactionsOnAccounts value.
+			
+	self assert: transferNet equals: (TransferNet of: anAccount) obtain! !
 
 !AccountReportTest methodsFor: 'private' stamp: 'agg 7/15/2021 17:44:20'!
 setUp
@@ -525,23 +535,6 @@ transactions
 addTransactionsTo: aCollectionOfTransactions
 
 	self subclassResponsibility ! !
-
-
-!Account methodsFor: 'as yet unclassified' stamp: 'SRM 7/15/2021 17:03:14'!
-initializeWithName: anAccountName
-
-	! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Account class' category: 'ServiciosFinancieros-Solucion'!
-Account class
-	instanceVariableNames: ''!
-
-!Account class methodsFor: 'as yet unclassified' stamp: 'SRM 7/15/2021 17:01:21'!
-named: anAccountName
-
-	^self new initializeWithName: anAccountName! !
 
 
 !classDefinition: #Portfolio category: 'ServiciosFinancieros-Solucion'!
