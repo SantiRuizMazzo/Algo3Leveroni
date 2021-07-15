@@ -1,3 +1,198 @@
+!classDefinition: #AccountReportTest category: 'ServiciosFinancieros-Solucion'!
+TestCase subclass: #AccountReportTest
+	instanceVariableNames: 'anAccount anotherAccount aPortfolio accountSummaryLines'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Solucion'!
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:34:20'!
+test13TransferNetOfAccountWithoutAnyTransactionsMustBeZero
+	
+	self assertPortfolioAfterTransactions: [] andAdditionOfAccounts: (OrderedCollection new) hasAccountTransferNet: (0*peso).
+! !
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:37:21'!
+test14TransferNetOfAccountWithOneTransferDepositLegMustBePositive
+
+	Deposit register: 15*peso on: anotherAccount.
+	Transfer amount: 10*peso from: anotherAccount to: anAccount.
+	
+	self assert: 10*peso equals: (TransferNet of: anAccount) obtain! !
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 17:48:04'!
+test15TransferNetOfAccountWithOneTransferWithdrawLegMustBeNegative
+
+	Deposit register: 15*peso on: anAccount.
+	Transfer amount: 10*peso from: anAccount to: anotherAccount.
+	
+	self assert: -10*peso equals: (TransferNet of: anAccount) obtain.! !
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 17:38:15'!
+test16TransferNetOfAccountWithManyTransferLegsMustBeOK
+
+	Deposit register: 15*peso on: anAccount.
+	Transfer amount: 10*peso from: anAccount to: anotherAccount.
+	Transfer amount: 5*peso from: anotherAccount to: anAccount.
+	
+	self assert: -5*peso equals: (TransferNet of: anAccount) obtain! !
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:38:49'!
+test17TransferNetOfPortfolioWithoutAnyTransactionsMustBeZero
+	
+	self assertPortfolioAfterTransactions: [] andAdditionOfAccounts: (OrderedCollection with: anAccount) hasAccountTransferNet: (0*peso).
+! !
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:39:31'!
+test18TransferNetOfPortfolioWithOneTransferDepositLegMustBePositive
+	
+	self assertPortfolioAfterTransactions: [
+			Deposit register: 15*peso on: anotherAccount.
+			Transfer amount: 10*peso from: anotherAccount to: anAccount.]
+		andAdditionOfAccounts: (OrderedCollection with: anAccount)
+		hasAccountTransferNet: (10*peso).
+! !
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:40:09'!
+test19TransferNetOfPortfolioWithOneTransferWithdrawLegMustBeNegative
+	
+	self assertPortfolioAfterTransactions: [
+			Deposit register: 15*peso on: anAccount.
+			Transfer amount: 10*peso from: anAccount to: anotherAccount.]
+		andAdditionOfAccounts: (OrderedCollection with: anAccount)
+		hasAccountTransferNet: (-10*peso).! !
+
+!AccountReportTest methodsFor: 'transfer net tests' stamp: 'agg 7/15/2021 18:41:03'!
+test20TransferNetOfPortfolioWithManyAccountsAndManyTransferLegsMustBeOK
+	
+	self assertPortfolioAfterTransactions: [
+			Deposit register: 15*peso on: anAccount.
+			Transfer amount: 10*peso from: anAccount to: anotherAccount.
+			Transfer amount: 5*peso from: anotherAccount to: anAccount.]
+		andAdditionOfAccounts: (OrderedCollection with: anAccount with: anotherAccount)
+		hasAccountTransferNet: (0*peso).! !
+
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:32:40'!
+test01SummaryOfAccountWithoutAnyTransactionsMustShowABalanceOf0Pesos
+
+	self assertReceptiveAccountAfterTransactions: [] hasAccountSummaryLines: (OrderedCollection with: 'Balance = 0 pesos'	)
+! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:32:40'!
+test02SummaryOfAccountWithOneDepositMustShowItAndAPositiveBalance
+
+	self assertReceptiveAccountAfterTransactions: [Deposit register: 100*peso on: anAccount.]
+		hasAccountSummaryLines: (OrderedCollection with: 'Depósito por 100 pesos' with: 'Balance = 100 pesos')
+! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:32:40'!
+test03SummaryOfAccountWithOneWithdrawMustShowItAndANegativeBalance
+
+	self assertReceptiveAccountAfterTransactions: [Withdraw register: 50*peso on: anAccount.]
+		hasAccountSummaryLines: (OrderedCollection with: 'Extracción por 50 pesos' with: 'Balance = -50 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:32:40'!
+test04SummaryOfAccountWithOneTransferWithdrawLegMustShowItAndANegativeBalance
+
+	self assertReceptiveAccountAfterTransactions: [Transfer amount: 10*peso from: anAccount to: anotherAccount.]
+		hasAccountSummaryLines: (OrderedCollection with: 'Salida por transferencia de 10 pesos' with: 'Balance = -10 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:32:40'!
+test05SummaryOfAccountWithOneTransferDepositLegMustShowItAndAPositiveBalance
+
+	self assertReceptiveAccountAfterTransactions: [Transfer amount: 10*peso from: anotherAccount to: anAccount.]
+		hasAccountSummaryLines: (OrderedCollection with: 'Entrada por transferencia de 10 pesos' with: 'Balance = 10 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:32:40'!
+test06SummaryOfAccountWithManyTransactionsMustShowThemAndItsRespectiveBalance
+
+	self assertReceptiveAccountAfterTransactions: [
+			Deposit register: 100*peso on: anAccount.
+			Withdraw register: 50*peso on: anAccount.
+			Transfer amount: 20*peso from: anAccount to: anotherAccount.
+			Transfer amount: 30*peso from: anotherAccount to: anAccount.]
+		hasAccountSummaryLines: (OrderedCollection
+			with: 'Depósito por 100 pesos' with: 'Extracción por 50 pesos' with: 'Salida por transferencia de 20 pesos'
+			with: 'Entrada por transferencia de 30 pesos' with: 'Balance = 60 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:29:55'!
+test07SummaryOfPortfolioWithoutAnyTransactionsMustShowABalanceOf0Pesos
+	
+	self assertPortfolioAfterTransactions: [] andAdditionOfAccounts: (OrderedCollection new) hasAccountSummaryLines: (OrderedCollection with: 'Balance = 0 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:25:20'!
+test08SummaryOfPortfolioWithOneDepositMustShowItAndAPositiveBalance
+
+	self assertPortfolioAfterTransactions: [	Deposit register: 100*peso on: anAccount.]
+		andAdditionOfAccounts: (OrderedCollection with: anAccount)
+		hasAccountSummaryLines: (OrderedCollection with: 'Depósito por 100 pesos' with: 'Balance = 100 pesos')
+	! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:30:17'!
+test09SummaryOfPortfolioWithOneWithdrawMustShowItAndANegativeBalance
+
+	self assertPortfolioAfterTransactions: [Withdraw register: 50*peso on: anAccount.]
+		andAdditionOfAccounts: (OrderedCollection with: anAccount)
+		hasAccountSummaryLines: (OrderedCollection with: 'Extracción por 50 pesos' with: 'Balance = -50 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:30:25'!
+test10SummaryOfPortfolioWithOneTransferWithdrawLegMustShowItAndANegativeBalance
+
+	self assertPortfolioAfterTransactions: [Transfer amount: 10*peso from: anAccount to: anotherAccount.]
+		andAdditionOfAccounts: (OrderedCollection with: anAccount)
+		hasAccountSummaryLines: (OrderedCollection with: 'Salida por transferencia de 10 pesos' with: 'Balance = -10 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:30:33'!
+test11SummaryOfPortfolioWithOneTransferDepositLegMustShowItAndAPositiveBalance
+
+	self assertPortfolioAfterTransactions: [Transfer amount: 10*peso from: anotherAccount to: anAccount.]
+		andAdditionOfAccounts:(OrderedCollection with: anAccount)
+		hasAccountSummaryLines: (OrderedCollection with: 'Entrada por transferencia de 10 pesos' with: 'Balance = 10 pesos')! !
+
+!AccountReportTest methodsFor: 'summary tests' stamp: 'agg 7/15/2021 18:29:27'!
+test12SummaryOfPortfolioWithManyAccountsAndManyTransactionsMustShowThemAndItsRespectiveBalance		
+	
+	accountSummaryLines _ OrderedCollection with: 'Depósito por 100 pesos' with: 'Extracción por 50 pesos' with: 'Salida por transferencia de 20 pesos' with: 'Entrada por transferencia de 30 pesos' with: 'Entrada por transferencia de 20 pesos' with: 'Salida por transferencia de 30 pesos'.
+	accountSummaryLines add: 'Balance = 50 pesos'.
+	
+	self assertPortfolioAfterTransactions: [	
+			Deposit register: 100*peso on: anAccount.
+			Withdraw register: 50*peso on: anAccount.
+			Transfer amount: 20*peso from: anAccount to: anotherAccount.
+			Transfer amount: 30*peso from: anotherAccount to: anAccount.]
+		andAdditionOfAccounts: (OrderedCollection with: anAccount with: anotherAccount)
+		hasAccountSummaryLines: accountSummaryLines.! !
+
+
+!AccountReportTest methodsFor: 'private' stamp: 'agg 7/15/2021 18:38:16'!
+assertPortfolioAfterTransactions: transactionsOnAccounts andAdditionOfAccounts: accountsToAdd hasAccountSummaryLines: summaryLines
+	
+	transactionsOnAccounts value.
+	accountsToAdd do: [:account | aPortfolio add: account].
+		
+	self assert: summaryLines equals: (Summary of: aPortfolio) obtain.! !
+
+!AccountReportTest methodsFor: 'private' stamp: 'agg 7/15/2021 18:33:42'!
+assertPortfolioAfterTransactions: transactionsOnAccounts andAdditionOfAccounts: accountsToAdd hasAccountTransferNet: transferNet
+	
+	transactionsOnAccounts value.
+	accountsToAdd do: [:account | aPortfolio add: account].
+			
+	self assert: transferNet equals: (TransferNet of: aPortfolio) obtain! !
+
+!AccountReportTest methodsFor: 'private' stamp: 'agg 7/15/2021 18:32:40'!
+assertReceptiveAccountAfterTransactions: transactions hasAccountSummaryLines: summaryLines
+	
+	transactions value.
+	self assert: summaryLines equals: (Summary of: anAccount) obtain! !
+
+!AccountReportTest methodsFor: 'private' stamp: 'agg 7/15/2021 17:44:20'!
+setUp
+	anAccount _ ReceptiveAccount new.
+	anotherAccount _ ReceptiveAccount new.
+	aPortfolio _ Portfolio new.! !
+
+
 !classDefinition: #PortfolioTest category: 'ServiciosFinancieros-Solucion'!
 TestCase subclass: #PortfolioTest
 	instanceVariableNames: ''
@@ -199,277 +394,6 @@ test07AccountKnowsItsTransactions
 ! !
 
 
-!classDefinition: #ReportTest category: 'ServiciosFinancieros-Solucion'!
-TestCase subclass: #ReportTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Solucion'!
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test01SummaryOfAccountWithoutTransactionsMustShowABalanceOf0Pesos
-
-	| anAccount |
-
-	anAccount _ ReceptiveAccount new.
-	
-	self assert: (OrderedCollection with: 'Balance = 0 pesos') equals: (Summary of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test02SummaryOfAccountWithOneDepositMustShowItAndAPositiveBalance
-
-	| anAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	Deposit register: 100*peso on: anAccount.
-	accountSummaryLines _ OrderedCollection with: 'Depósito por 100 pesos' with: 'Balance = 100 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test03SummaryOfAccountWithOneWithdrawMustShowItAndANegativeBalance
-
-	| anAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	Withdraw register: 50*peso on: anAccount.
-	accountSummaryLines _ OrderedCollection with: 'Extracción por 50 pesos' with: 'Balance = -50 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test04SummaryOfAccountWithOneTransferWithdrawLegMustShowItAndANegativeBalance
-
-	| anAccount anotherAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	
-	accountSummaryLines _ OrderedCollection with: 'Salida por transferencia de 10 pesos' with: 'Balance = -10 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test05SummaryOfAccountWithOneTransferDepositLegMustShowItAndAPositiveBalance
-
-	| anAccount anotherAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Transfer amount: 10*peso from: anotherAccount to: anAccount.
-	
-	accountSummaryLines _ OrderedCollection with: 'Entrada por transferencia de 10 pesos' with: 'Balance = 10 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test06SummaryOfAccountWithManyTransactionsMustShowThemAndItsRespectiveBalance
-
-	| anAccount anotherAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	
-	Deposit register: 100*peso on: anAccount.
-	Withdraw register: 50*peso on: anAccount.
-	Transfer amount: 20*peso from: anAccount to: anotherAccount.
-	Transfer amount: 30*peso from: anotherAccount to: anAccount.
-	
-	accountSummaryLines _ OrderedCollection with: 'Depósito por 100 pesos' with: 'Extracción por 50 pesos' with: 'Salida por transferencia de 20 pesos' with: 'Entrada por transferencia de 30 pesos' with: 'Balance = 60 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test07SummaryOfPortfolioWithoutTransactionsMustShowABalanceOf0Pesos
-
-	| aPortfolio |
-
-	aPortfolio _ Portfolio new.
-	
-	self assert: (OrderedCollection with: 'Balance = 0 pesos') equals: (Summary of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test08SummaryOfPortfolioWithOneDepositMustShowItAndAPositiveBalance
-
-	| aPortfolio anAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	Deposit register: 100*peso on: anAccount.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	
-	accountSummaryLines _ OrderedCollection with: 'Depósito por 100 pesos' with: 'Balance = 100 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:43'!
-test09SummaryOfPortfolioWithOneWithdrawMustShowItAndANegativeBalance
-
-	| aPortfolio anAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	Withdraw register: 50*peso on: anAccount.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	accountSummaryLines _ OrderedCollection with: 'Extracción por 50 pesos' with: 'Balance = -50 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test10SummaryOfPortfolioWithOneTransferWithdrawLegMustShowItAndANegativeBalance
-
-	| aPortfolio anAccount anotherAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	
-	accountSummaryLines _ OrderedCollection with: 'Salida por transferencia de 10 pesos' with: 'Balance = -10 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test11SummaryOfPortfolioWithOneTransferDepositLegMustShowItAndAPositiveBalance
-
-	| aPortfolio anAccount anotherAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Transfer amount: 10*peso from: anotherAccount to: anAccount.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	
-	accountSummaryLines _ OrderedCollection with: 'Entrada por transferencia de 10 pesos' with: 'Balance = 10 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 10:55:44'!
-test12SummaryOfPortfolioWithManyAccountsAndManyTransactionsMustShowThemAndItsRespectiveBalance
-
-	| aPortfolio anAccount anotherAccount accountSummaryLines |
-
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	
-	Deposit register: 100*peso on: anAccount.
-	Withdraw register: 50*peso on: anAccount.
-	Transfer amount: 20*peso from: anAccount to: anotherAccount.
-	Transfer amount: 30*peso from: anotherAccount to: anAccount.
-	
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	aPortfolio add: anotherAccount.
-	
-	accountSummaryLines _ OrderedCollection with: 'Depósito por 100 pesos' with: 'Extracción por 50 pesos' with: 'Salida por transferencia de 20 pesos' with: 'Entrada por transferencia de 30 pesos' with: 'Entrada por transferencia de 20 pesos' with: 'Salida por transferencia de 30 pesos'.
-	accountSummaryLines add: 'Balance = 50 pesos'.	
-	
-	self assert: accountSummaryLines equals: (Summary of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:01:38'!
-test13TransferNetOfAccountWithoutTransactionsMustBeZero
-
-	| anAccount |
-	
-	anAccount _ ReceptiveAccount new.
-	
-	self assert: 0*peso equals: (TransferNet of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:01:42'!
-test14TransferNetOfAccountWithOneTransferDepositLegMustBePositive
-
-	| anAccount anotherAccount |
-	
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Deposit register: 15*peso on: anotherAccount.
-	Transfer amount: 10*peso from: anotherAccount to: anAccount.
-	
-	self assert: 10*peso equals: (TransferNet of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:01:47'!
-test15TransferNetOfAccountWithOneTransferWithdrawLegMustBeNegative
-
-	| anAccount anotherAccount |
-	
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Deposit register: 15*peso on: anAccount.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	
-	self assert: -10*peso equals: (TransferNet of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:01:50'!
-test16TransferNetOfAccountWithManyTransferLegsMustBeOK
-
-	| anAccount anotherAccount |
-	
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Deposit register: 15*peso on: anAccount.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	Transfer amount: 5*peso from: anotherAccount to: anAccount.
-	
-	self assert: -5*peso equals: (TransferNet of: anAccount) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:02:00'!
-test17TransferNetOfPortfolioWithoutTransactionsMustBeZero
-
-	| anAccount aPortfolio |
-	
-	anAccount _ ReceptiveAccount new.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	
-	self assert: 0*peso equals: (TransferNet of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:02:05'!
-test18TransferNetOfPortfolioWithOneTransferDepositLegMustBePositive
-
-	| aPortfolio anAccount anotherAccount |
-	
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Deposit register: 15*peso on: anotherAccount.
-	Transfer amount: 10*peso from: anotherAccount to: anAccount.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	
-	self assert: 10*peso equals: (TransferNet of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:02:09'!
-test19TransferNetOfPortfolioWithOneTransferWithdrawLegMustBeNegative
-
-	| aPortfolio anAccount anotherAccount |
-	
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Deposit register: 15*peso on: anAccount.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	
-	self assert: -10*peso equals: (TransferNet of: aPortfolio) compute! !
-
-!ReportTest methodsFor: 'tests' stamp: 'SRM 7/14/2021 11:02:13'!
-test20TransferNetOfPortfolioWithManyAccountsAndManyTransferLegsMustBeOK
-
-	| aPortfolio anAccount anotherAccount |
-	
-	anAccount _ ReceptiveAccount new.
-	anotherAccount _ ReceptiveAccount new.
-	Deposit register: 15*peso on: anAccount.
-	Transfer amount: 10*peso from: anAccount to: anotherAccount.
-	Transfer amount: 5*peso from: anotherAccount to: anAccount.
-	aPortfolio _ Portfolio new.
-	aPortfolio add: anAccount.
-	aPortfolio add: anotherAccount.
-	
-	self assert: 0*peso equals: (TransferNet of: aPortfolio) compute! !
-
-
 !classDefinition: #TransferTest category: 'ServiciosFinancieros-Solucion'!
 TestCase subclass: #TransferTest
 	instanceVariableNames: ''
@@ -602,18 +526,36 @@ addTransactionsTo: aCollectionOfTransactions
 
 	self subclassResponsibility ! !
 
+
+!Account methodsFor: 'as yet unclassified' stamp: 'SRM 7/15/2021 17:03:14'!
+initializeWithName: anAccountName
+
+	! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Account class' category: 'ServiciosFinancieros-Solucion'!
+Account class
+	instanceVariableNames: ''!
+
+!Account class methodsFor: 'as yet unclassified' stamp: 'SRM 7/15/2021 17:01:21'!
+named: anAccountName
+
+	^self new initializeWithName: anAccountName! !
+
 
 !classDefinition: #Portfolio category: 'ServiciosFinancieros-Solucion'!
 Account subclass: #Portfolio
-	instanceVariableNames: 'accounts'
+	instanceVariableNames: 'accounts name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!Portfolio methodsFor: 'initialization' stamp: 'LL 7/1/2021 03:21:03'!
+!Portfolio methodsFor: 'initialization' stamp: 'SRM 7/15/2021 17:00:26'!
 initialize
 
-	accounts := OrderedCollection new.! !
+	accounts _ OrderedCollection new.
+	name _ 'Unnamed account'! !
 
 
 !Portfolio methodsFor: 'main protocol' stamp: 'SRM 7/12/2021 10:25:37'!
@@ -673,16 +615,17 @@ with: anAccount with: anotherAccount
 
 !classDefinition: #ReceptiveAccount category: 'ServiciosFinancieros-Solucion'!
 Account subclass: #ReceptiveAccount
-	instanceVariableNames: 'transactions'
+	instanceVariableNames: 'transactions name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:35'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'SRM 7/15/2021 17:00:49'!
 initialize
 
 	super initialize.
-	transactions := OrderedCollection new.! !
+	transactions _ OrderedCollection new.
+	name _ 'Unnamed account'! !
 
 
 !ReceptiveAccount methodsFor: 'main protocol' stamp: 'SRM 7/12/2021 10:25:45'!
@@ -723,8 +666,8 @@ Object subclass: #AccountReport
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!AccountReport methodsFor: 'processing' stamp: 'SRM 7/14/2021 10:57:18'!
-compute
+!AccountReport methodsFor: 'main protocol' stamp: 'SRM 7/14/2021 20:23:33'!
+obtain
 
 	self subclassResponsibility! !
 
@@ -732,6 +675,27 @@ compute
 !AccountReport methodsFor: 'initialization' stamp: 'SRM 7/14/2021 10:57:08'!
 initializeFor: anAccount
 
+	self subclassResponsibility! !
+
+
+!AccountReport methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:35:31'!
+visitADeposit: aDeposit
+	
+	self subclassResponsibility! !
+
+!AccountReport methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:36:14'!
+visitATransferDepositLeg: aTransferDepositLeg
+	
+	self subclassResponsibility! !
+
+!AccountReport methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:36:00'!
+visitATransferWithdrawLeg: aTransferWithdrawLeg
+	
+	self subclassResponsibility! !
+
+!AccountReport methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:35:44'!
+visitAWithdraw: aWithdraw
+	
 	self subclassResponsibility! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -753,10 +717,11 @@ AccountReport subclass: #Summary
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!Summary methodsFor: 'processing' stamp: 'SRM 7/14/2021 11:26:50'!
-compute
+!Summary methodsFor: 'main protocol' stamp: 'SRM 7/14/2021 20:23:33'!
+obtain
 
-	summaryLines _ account transactions collect: [:aTransaction | aTransaction asSummaryLineFor: self].
+	"asSummaryLineFor: --> accept:"
+	summaryLines _ account transactions collect: [:aTransaction | aTransaction accept: self].
 	summaryLines add: 'Balance = ',account balance asString.
 	^summaryLines! !
 
@@ -768,24 +733,24 @@ initializeFor: anAccount
 	summaryLines _ OrderedCollection new! !
 
 
-!Summary methodsFor: 'private' stamp: 'SRM 7/14/2021 11:18:59'!
-depositAsSummaryLine: aDeposit
-
+!Summary methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:38:11'!
+visitADeposit: aDeposit
+	
 	^'Depósito por ',aDeposit value asString! !
 
-!Summary methodsFor: 'private' stamp: 'SRM 7/14/2021 11:19:04'!
-transferDepositLegAsSummaryLine: aTransferDepositLeg
-
+!Summary methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:38:20'!
+visitATransferDepositLeg: aTransferDepositLeg
+	
 	^'Entrada por transferencia de ',aTransferDepositLeg value asString! !
 
-!Summary methodsFor: 'private' stamp: 'SRM 7/14/2021 11:19:09'!
-transferWithdrawLegAsSummaryLine: aTransferWithdrawLeg
-
+!Summary methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:38:34'!
+visitATransferWithdrawLeg: aTransferWithdrawLeg
+	
 	^'Salida por transferencia de ',aTransferWithdrawLeg value asString! !
 
-!Summary methodsFor: 'private' stamp: 'SRM 7/14/2021 11:19:27'!
-withdrawAsSummaryLine: aWithdraw
-
+!Summary methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:38:46'!
+visitAWithdraw: aWithdraw
+	
 	^'Extracción por ',aWithdraw value asString! !
 
 
@@ -802,30 +767,30 @@ initializeFor: anAccount
 	account _ anAccount! !
 
 
-!TransferNet methodsFor: 'processing' stamp: 'SRM 7/14/2021 11:42:15'!
-compute
+!TransferNet methodsFor: 'main protocol' stamp: 'SRM 7/15/2021 16:16:54'!
+obtain
+	
+	"asValueFor: --> accept:"
+	^account transactions sum: [:aTransaction | aTransaction accept: self] ifEmpty: [0*peso]! !
 
-	"^account transactions inject: 0*peso into: [:currentTransferNet :aTransaction | aTransaction affectTransferNet: currentTransferNet]."
-	^account transactions sum: [:aTransaction | aTransaction asValueFor: self] ifEmpty: [0*peso]! !
 
-
-!TransferNet methodsFor: 'private' stamp: 'SRM 7/14/2021 11:38:30'!
-depositValue: aDeposit
+!TransferNet methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:40:04'!
+visitADeposit: aDeposit
 
 	^0! !
 
-!TransferNet methodsFor: 'private' stamp: 'SRM 7/14/2021 11:39:03'!
-transferDepositLegValue: aTransferDepositLeg
+!TransferNet methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:40:33'!
+visitATransferDepositLeg: aTransferDepositLeg
 
 	^aTransferDepositLeg value! !
 
-!TransferNet methodsFor: 'private' stamp: 'SRM 7/14/2021 11:39:58'!
-transferWithdrawLegValue: aTransferWithdrawLeg
+!TransferNet methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:40:44'!
+visitATransferWithdrawLeg: aTransferWithdrawLeg
 
 	^aTransferWithdrawLeg value negated! !
 
-!TransferNet methodsFor: 'private' stamp: 'SRM 7/14/2021 11:38:35'!
-withdrawValue: aWithdraw
+!TransferNet methodsFor: 'visiting - private' stamp: 'SRM 7/14/2021 18:40:16'!
+visitAWithdraw: aWithdraw
 
 	^0! !
 
@@ -849,13 +814,8 @@ affectBalance: aBalance
 	self subclassResponsibility ! !
 
 
-!AccountTransaction methodsFor: 'private' stamp: 'SRM 7/14/2021 11:23:14'!
-asSummaryLineFor: anAccountSummary
-
-	self subclassResponsibility! !
-
-!AccountTransaction methodsFor: 'private' stamp: 'SRM 7/14/2021 11:41:06'!
-asValueFor: anAccountTransferNet
+!AccountTransaction methodsFor: 'visiting' stamp: 'SRM 7/14/2021 18:32:19'!
+accept: aVisitor
 
 	self subclassResponsibility! !
 
@@ -901,15 +861,10 @@ affectBalance: aBalance
 	^aBalance + value ! !
 
 
-!Deposit methodsFor: 'private' stamp: 'SRM 7/14/2021 11:23:14'!
-asSummaryLineFor: anAccountSummary
+!Deposit methodsFor: 'visiting' stamp: 'SRM 7/14/2021 18:33:03'!
+accept: aVisitor
 
-	^anAccountSummary depositAsSummaryLine: self! !
-
-!Deposit methodsFor: 'private' stamp: 'SRM 7/14/2021 11:41:06'!
-asValueFor: anAccountTransferNet
-
-	^anAccountTransferNet depositValue: self! !
+	^aVisitor visitADeposit: self! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -942,13 +897,8 @@ initializeWith: aTransfer
 	transfer := aTransfer! !
 
 
-!TransferLeg methodsFor: 'private' stamp: 'SRM 7/14/2021 11:23:13'!
-asSummaryLineFor: anAccountSummary
-
-	self subclassResponsibility! !
-
-!TransferLeg methodsFor: 'private' stamp: 'SRM 7/14/2021 11:41:06'!
-asValueFor: anAccountTransferNet
+!TransferLeg methodsFor: 'visiting' stamp: 'SRM 7/14/2021 18:41:13'!
+accept: aVisitor
 
 	self subclassResponsibility! !
 
@@ -988,15 +938,10 @@ affectBalance: aBalance
 	^aBalance + self value! !
 
 
-!TransferDepositLeg methodsFor: 'private' stamp: 'SRM 7/14/2021 11:23:14'!
-asSummaryLineFor: anAccountSummary
+!TransferDepositLeg methodsFor: 'visiting' stamp: 'SRM 7/14/2021 18:33:43'!
+accept: aVisitor
 
-	^anAccountSummary transferDepositLegAsSummaryLine: self! !
-
-!TransferDepositLeg methodsFor: 'private' stamp: 'SRM 7/14/2021 11:41:06'!
-asValueFor: anAccountTransferNet
-
-	^anAccountTransferNet transferDepositLegValue: self! !
+	^aVisitor visitATransferDepositLeg: self! !
 
 
 !classDefinition: #TransferWithdrawLeg category: 'ServiciosFinancieros-Solucion'!
@@ -1018,15 +963,10 @@ affectBalance: aBalance
 	^aBalance - self value! !
 
 
-!TransferWithdrawLeg methodsFor: 'private' stamp: 'SRM 7/14/2021 11:23:14'!
-asSummaryLineFor: anAccountSummary
+!TransferWithdrawLeg methodsFor: 'visiting' stamp: 'SRM 7/14/2021 18:33:56'!
+accept: aVisitor
 
-	^anAccountSummary transferWithdrawLegAsSummaryLine: self! !
-
-!TransferWithdrawLeg methodsFor: 'private' stamp: 'SRM 7/14/2021 11:41:05'!
-asValueFor: anAccountTransferNet
-
-	^anAccountTransferNet transferWithdrawLegValue: self! !
+	^aVisitor visitATransferWithdrawLeg: self! !
 
 
 !classDefinition: #Withdraw category: 'ServiciosFinancieros-Solucion'!
@@ -1054,15 +994,10 @@ affectBalance: aBalance
 	^aBalance - value! !
 
 
-!Withdraw methodsFor: 'private' stamp: 'SRM 7/14/2021 11:23:14'!
-asSummaryLineFor: anAccountSummary
+!Withdraw methodsFor: 'visiting' stamp: 'SRM 7/14/2021 18:33:19'!
+accept: aVisitor
 
-	^anAccountSummary withdrawAsSummaryLine: self! !
-
-!Withdraw methodsFor: 'private' stamp: 'SRM 7/14/2021 11:41:06'!
-asValueFor: anAccountTransferNet
-
-	^anAccountTransferNet withdrawValue: self! !
+	^aVisitor visitAWithdraw: self! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
